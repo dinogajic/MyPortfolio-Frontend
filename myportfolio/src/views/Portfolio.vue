@@ -1,6 +1,6 @@
 <template>
   <div class="portfolio">
-    <div><h1>jaksdjkasjdkasjdas</h1></div>
+    <div><h1>PORTFOLIO</h1></div>
   </div>
 </template>
 
