@@ -6,21 +6,18 @@
           <div
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
-            <img
-              class="rounded-circle m-5"
-              width="150px"
-              src="@/assets/dummy.png"
-            />
-            <croppa
-              v-model="myCroppa"
-              :width="150"
-              :height="150"
-              :canvas-color="'default'"
-              :placeholder="'Choose an image'"
-              :placeholder-font-size="15"
-              :placeholder-color="'default'"
-            ></croppa
-            ><span class="mt-2">Rene Borić</span
+            <div>
+              <croppa
+                class="rounded-circle"
+                v-model="croppa"
+                :width="200"
+                :height="200"
+                :image-border-radius="225"
+                prevent-white-space
+              ></croppa>
+            </div>
+
+            <span class="mt-2">Rene Borić</span
             ><span class="text-black-50 mt-2">rboric1901@gmaill.com</span
             ><span>
               <label class="btn btn-primary profile-button mt-3">
