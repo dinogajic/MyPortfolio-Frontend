@@ -28,12 +28,11 @@
 
 <script>
 export default {
-  name: PortfolioComponent,
+  name: "PortfolioComponent",
   data() {
     return {};
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

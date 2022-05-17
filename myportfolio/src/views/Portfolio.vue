@@ -1,7 +1,9 @@
 <template>
   <div class="portfolio">
     <div class="container">
-      <div class="row"></div>
+      <div class="row">
+        <portfolio-component />
+      </div>
     </div>
   </div>
 </template>
