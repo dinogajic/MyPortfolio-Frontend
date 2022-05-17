@@ -1,11 +1,25 @@
 <template>
   <div class="portfolio">
-    <div><h1>PORTFOLIO</h1></div>
+    <div class="container">
+      <div class="row"></div>
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import PortfolioComponent from "@/components/PortfolioComponent.vue";
+
+export default {
+  name: "Portfolio",
+  data() {
+    return {};
+  },
+  components: { PortfolioComponent },
+};
 </script>
 
-<style></style>
+<style>
+.portfolio {
+  padding: 5px;
+}
+</style>

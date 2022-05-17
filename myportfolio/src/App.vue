@@ -24,7 +24,7 @@
           id="navbarNavAltMarkup"
         >
           <div class="navbar-nav">
-            <router-link onclick="closeFunc()" class="nav-link" to="/home">
+            <router-link class="nav-link" to="/home">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -153,9 +153,7 @@ export default {
   data: () => ({
     //
   }),
-  methods: {
-    closeFunc() {},
-  },
+  methods: {},
 };
 </script>
 <style>
@@ -165,6 +163,7 @@ export default {
 
 nav {
   background-color: #089965;
+  z-index: 999;
 }
 
 a {
@@ -193,6 +192,7 @@ a:hover {
   color: none !important;
   border: none;
   transition: 0.3s !important;
+  z-index: 999;
 }
 
 .navbar-toggler:hover {
