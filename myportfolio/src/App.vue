@@ -24,7 +24,7 @@
           id="navbarNavAltMarkup"
         >
           <div class="navbar-nav">
-            <router-link class="nav-link" to="/home">
+            <router-link class="nav-link" to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -157,6 +157,11 @@ export default {
 };
 </script>
 <style>
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+  display: none;
+}
+
 * {
   font-family: "Oswald", sans-serif;
 }
