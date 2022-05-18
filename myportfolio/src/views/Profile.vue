@@ -151,7 +151,12 @@
         <div class="col-md-4">
           <div class="p-3 py-5">
             <div
-              class="d-flex justify-content-between align-items-center experience"
+              class="
+                d-flex
+                justify-content-between
+                align-items-center
+                experience
+              "
             >
               <span>Edit Experience</span
               ><span class="border px-3 p-1 add-experience"
@@ -216,7 +221,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 input[type="file"] {
   display: none;
 }
@@ -234,7 +239,7 @@ label {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #84e3c1 !important;
   opacity: 0.7 !important; /* Firefox */
-  font-weight: 100;
+  font-weight: 400;
   letter-spacing: 0px;
 }
 

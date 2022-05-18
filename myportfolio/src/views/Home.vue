@@ -8,7 +8,7 @@
       <button class="btn-secondary">CREATE PORTFOLIO</button>
       <button class="btn-secondary">VIEW PORTFOLIO</button>
     </div>
-    <!-- <div class="wrap">
+    <!--     <div class="wrap">
       <div class="svg-circle-big-beginning"></div>
       <div class="h1-1">
         <h1>Create and show all your portfolios in one place.</h1>
@@ -17,8 +17,7 @@
       <div class="svg-circle-big"></div>
       <div class="h1-2">
         <h1>Visit other people's portfolios and profiles.</h1>
-      </div>
-    </div> -->
+      </div> -->
   </div>
 </template>
 
@@ -31,7 +30,8 @@ export default {
   methods: {},
 };
 </script>
-<style>
+
+<style scoped>
 .home {
   z-index: -10;
   height: 100vh;
@@ -61,9 +61,9 @@ export default {
 
 .container-center {
   margin: auto;
-  width: 40%;
+  width: 30%;
   text-align: center;
-  padding: 100px;
+  padding: 50px;
 }
 
 .btn-primary {

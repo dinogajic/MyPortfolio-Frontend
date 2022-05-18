@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .portfolio {
   padding: 5px;
 }
@@ -36,6 +36,12 @@ export default {
 @media (max-width: 992px) {
   .row > * {
     width: 100% !important;
+  }
+}
+
+@media (max-width: 1080px) {
+  .row > * {
+    width: 50% !important;
   }
 }
 </style>

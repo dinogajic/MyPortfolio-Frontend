@@ -1,8 +1,8 @@
 <template>
-  <div class="app">
+  <div class="app scrollbar-hidden">
     <nav class="navbar navbar-expand-lg">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#"
+        <a class="navbar-brand" href="/"
           ><img
             class="nav-logo"
             src="@/assets/MyPortfolioTextWhitepng.png"
@@ -138,11 +138,167 @@
                   d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                 /></svg
             ></router-link>
+            <a class="nav-link" @click="modalLoginRegister()"> LOG IN </a>
           </div>
         </div>
       </div>
     </nav>
     <router-view />
+    <!-- MODAL LOGIN/REGISTER -->
+    <div
+      class="modal fade"
+      id="LoginRegister"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="LoginRegisterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="container">
+              <div class="row">
+                <div class="col-sm-6 loginRegisterBtn">
+                  <button @click="loginBtn()" class="loginButton">Login</button>
+                </div>
+                <div class="col-sm-6 loginRegisterBtn">
+                  <button @click="registerBtn()" class="registerButton">
+                    Register
+                  </button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="loginForm">
+                  <form class="form-login">
+                    <div class="form">
+                      <div class="form-group">
+                        <label for="inputlEmail">E-mail</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="inputlEmail"
+                          aria-describedby="emailHelp"
+                          placeholder="Email"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputlPassword">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="inputlPassword"
+                          placeholder="Password"
+                          required
+                        />
+                      </div>
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          id="flexSwitchCheckDefault"
+                          @click="showPassword()"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="flexSwitchCheckDefault"
+                          >Show password</label
+                        >
+                      </div>
+                      <a class="passwordreset" href="/">Forgotten password?</a>
+                      <div class="submit-button">
+                        <button class="btn btn-primary">Log In</button>
+                      </div>
+                    </div>
+                    <p class="error"></p>
+                  </form>
+                </div>
+                <div class="registerForm">
+                  <form class="form-register">
+                    <div class="form">
+                      <div class="form-group">
+                        <label for="inputrIme">Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputrIme"
+                          placeholder="First Name"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputrPrezime">Surname</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputrPrezime"
+                          placeholder="Surname"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputrEmail">Email adresa</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          id="inputrEmail"
+                          aria-describedby="emailHelp"
+                          placeholder="Email adresa"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputrPassword">Password</label>
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="inputrPassword"
+                          placeholder="Password"
+                          required
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="inputrRepeatPassword"
+                          >Repeat password</label
+                        >
+                        <input
+                          type="password"
+                          class="form-control"
+                          id="inputrRepeatPassword"
+                          placeholder="Repeat password"
+                          required
+                        />
+                      </div>
+                      <div class="form-check form-switch">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          role="switch"
+                          id="flexSwitchCheckDefault"
+                          @click="showPassword()"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="flexSwitchCheckDefault"
+                          >Show password</label
+                        >
+                      </div>
+                      <div class="submit-button">
+                        <button class="btnRegister btn btn-primary">
+                          Register
+                        </button>
+                      </div>
+                    </div>
+                    <p class="error"></p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -153,13 +309,31 @@ export default {
   data: () => ({
     //
   }),
-  methods: {},
+  methods: {
+    modalLoginRegister() {
+      $("#LoginRegister").modal("show");
+    },
+    loginBtn() {
+      $(".loginForm").css({ display: "block" });
+      $(".registerForm").css({ display: "none" });
+    },
+    registerBtn() {
+      $(".registerForm").css({ display: "block" });
+      $(".loginForm").css({ display: "none" });
+    },
+  },
 };
 </script>
 <style>
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;
+}
+
+/* Hide scrollbar for IE, Edge add Firefox */
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none; /* Firefox */
 }
 
 * {
@@ -219,6 +393,12 @@ a:hover {
 .green-text:hover {
   opacity: 0.6;
   transition: 0.3s;
+}
+
+/* LOGIN/REGISTER */
+
+.registerForm {
+  display: none;
 }
 
 @media (max-width: 992px) {
