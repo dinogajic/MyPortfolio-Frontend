@@ -2,7 +2,7 @@
   <div class="portfolio">
     <div class="container">
       <div class="row">
-        <portfolio-component />
+        <portfolio-component v-for="n in 5" :key="n" :n="n" />
       </div>
     </div>
   </div>
@@ -23,5 +23,19 @@ export default {
 <style>
 .portfolio {
   padding: 5px;
+}
+
+.row > * {
+  width: 50% !important;
+}
+
+.v-application--wrap {
+  min-height: 0;
+}
+
+@media (max-width: 992px) {
+  .row > * {
+    width: 100% !important;
+  }
 }
 </style>
