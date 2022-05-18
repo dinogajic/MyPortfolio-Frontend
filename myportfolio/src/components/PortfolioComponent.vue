@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <div class="col-sm-6 card-container">
-      <v-card class="mx-auto" max-width="450"
+    <div class="col-sm-12">
+      <v-card class="mx-auto" max-width="500"
         ><v-system-bar lights-out></v-system-bar>
         <v-carousel
           :continuous="false"
