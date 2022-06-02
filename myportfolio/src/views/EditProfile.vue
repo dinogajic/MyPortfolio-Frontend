@@ -27,52 +27,123 @@
             >
           </div>
         </div>
-        <div
-          class="col-md-5 border-right"
-          v-for="data in userData"
-          :key="data.id"
-        >
+        <div class="col-md-5 border-right">
           <div class="p-3 py-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="text-right">Profile Settings</h4>
             </div>
             <div class="row mt-2">
               <div class="col-md-6">
-                <label class="labels">Name</label>
-                <p>{{ data.name }}</p>
+                <label class="labels">Name</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Name..."
+                  value=""
+                />
               </div>
               <div class="col-md-6">
-                <label class="labels">Surname</label>
-                <p>{{ data.surname }}</p>
+                <label class="labels">Surname</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  value=""
+                  placeholder="Surname..."
+                />
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
-                <label class="labels">Mobile Number</label>
-                <p>{{ data.mobile_number }}</p>
+                <label class="labels">Mobile Number</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Phone Number..."
+                  value=""
+                />
               </div>
               <div class="col-md-12">
-                <label class="labels">Address</label>
-                <p>{{ data.address }}</p>
+                <label class="labels">Address Line 1</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Address Line 1..."
+                  value=""
+                />
               </div>
               <div class="col-md-12">
-                <label class="labels">Postcode</label>
-                <p>{{ data.postcode }}</p>
+                <label class="labels">Address Line 2</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Address Line 2..."
+                  value=""
+                />
               </div>
-
               <div class="col-md-12">
-                <label class="labels">Email</label>
-                <p>{{ data.email }}</p>
+                <label class="labels">Postcode</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Postcode..."
+                  value=""
+                />
               </div>
               <div class="col-md-12">
-                <label class="labels">Education</label>
-                <p>{{ data.education }}</p>
+                <label class="labels">State</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter State..."
+                  value=""
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Area</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Area..."
+                  value=""
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Email</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Your E-mail..."
+                  value=""
+                />
+              </div>
+              <div class="col-md-12">
+                <label class="labels">Education</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Education..."
+                  value=""
+                />
               </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-6">
-                <label class="labels">Country</label>
-                <p>{{ data.country }}</p>
+                <label class="labels">Country</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  placeholder="Country..."
+                  value=""
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="labels">State/Region</label
+                ><input
+                  type="text"
+                  class="form-control"
+                  value=""
+                  placeholder="State..."
+                />
               </div>
             </div>
           </div>
@@ -89,11 +160,23 @@
             </div>
             <br />
             <div class="col-md-12">
-              <label class="labels">Experience in Designing</label>
+              <label class="labels">Experience in Designing</label
+              ><input
+                type="text"
+                class="form-control"
+                placeholder="Experience"
+                value=""
+              />
             </div>
             <br />
             <div class="col-md-12">
-              <label class="labels">Additional Details</label>
+              <label class="labels">Additional Details</label
+              ><input
+                type="text"
+                class="form-control"
+                placeholder="Additional details"
+                value=""
+              />
             </div>
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5"
@@ -111,11 +194,9 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
           <div class="mt-2 text-center">
-            <router-link to="/edit-profile"
-              ><button class="btn btn-primary profile-button" type="button">
-                Edit Profile
-              </button></router-link
-            >
+            <button class="btn btn-primary profile-button" type="button">
+              Save Profile
+            </button>
           </div>
         </div>
         <div class="col-md-4"></div>
@@ -125,34 +206,12 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "Profile",
   data() {
     return {
-      userData: [],
       imageReference: null,
     };
-  },
-  mounted() {
-    this.getUserData();
-  },
-  methods: {
-    async getUserData() {
-      const response = await axios("http://localhost:3000");
-      this.userData.push({
-        _id: response.data._id,
-        name: response.data.name,
-        surname: response.data.surname,
-        mobile_number: response.data.mobile_number,
-        address: response.data.address,
-        postcode: response.data.postcode,
-        email: response.data.email,
-        education: response.data.education,
-        country: response.data.country,
-      });
-      console.log(this.userData);
-    },
   },
 };
 </script>
