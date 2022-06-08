@@ -55,6 +55,10 @@ export default {
   font-family: "Abril Fatface", cursive;
 }
 
+.h1-title h1::selection {
+  background: #085035;
+}
+
 .wrap {
   height: 120vh;
 }

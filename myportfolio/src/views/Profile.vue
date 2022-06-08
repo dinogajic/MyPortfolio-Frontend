@@ -39,11 +39,11 @@
             <div class="row mt-2">
               <div class="col-md-6">
                 <label class="labels">Name</label>
-                <p>{{ data.name }}</p>
+                <p>{{ data.firstName }}</p>
               </div>
               <div class="col-md-6">
                 <label class="labels">Surname</label>
-                <p>{{ data.surname }}</p>
+                <p>{{ data.lastName }}</p>
               </div>
             </div>
             <div class="row mt-3">
@@ -139,19 +139,16 @@ export default {
   },
   methods: {
     async getUserData() {
-      const response = await axios("http://localhost:3000");
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/user"
+      );
       this.userData.push({
         _id: response.data._id,
-        name: response.data.name,
-        surname: response.data.surname,
-        mobile_number: response.data.mobile_number,
-        address: response.data.address,
-        postcode: response.data.postcode,
         email: response.data.email,
-        education: response.data.education,
-        country: response.data.country,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
       });
-      console.log(this.userData);
+      console.log(response.data);
     },
   },
 };

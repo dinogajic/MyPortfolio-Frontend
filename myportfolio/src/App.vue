@@ -24,7 +24,7 @@
           id="navbarNavAltMarkup"
         >
           <div class="navbar-nav">
-            <router-link class="nav-link" to="/">
+            <router-link class="nav-link" to="/" v-if="auth.authenticated">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -49,7 +49,10 @@
                   d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z"
                 /></svg
             ></router-link>
-            <router-link class="nav-link" to="/portfolio"
+            <router-link
+              class="nav-link"
+              to="/portfolio"
+              v-if="auth.authenticated"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -79,7 +82,10 @@
                   d="M3 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0-5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5v-1z"
                 /></svg
             ></router-link>
-            <router-link class="nav-link" to="/profile"
+            <router-link
+              class="nav-link"
+              to="/profile"
+              v-if="auth.authenticated"
               ><svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -103,7 +109,7 @@
                   d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
                 /></svg
             ></router-link>
-            <router-link class="nav-link" to="/home">
+            <a class="nav-link" @click="logout" v-if="auth.authenticated">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="36"
@@ -137,8 +143,14 @@
                   fill-rule="evenodd"
                   d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                 /></svg
-            ></router-link>
-            <a class="nav-link" @click="modalLoginRegister()"> LOG IN </a>
+            ></a>
+            <a
+              class="nav-link"
+              @click="modalLoginRegister()"
+              v-if="!auth.authenticated"
+            >
+              LOG IN
+            </a>
           </div>
         </div>
       </div>
@@ -168,52 +180,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="loginForm">
-                  <form class="form-login">
-                    <div class="form">
-                      <div class="form-group">
-                        <label for="inputlEmail">E-mail</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="inputlEmail"
-                          aria-describedby="emailHelp"
-                          placeholder="Email"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="inputlPassword">Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="inputlPassword"
-                          placeholder="Password"
-                          required
-                        />
-                      </div>
-                      <div class="form-check form-switch">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          id="flexSwitchCheckDefault"
-                          @click="showPassword()"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="flexSwitchCheckDefault"
-                          >Show password</label
-                        >
-                      </div>
-                      <a class="passwordreset" href="/">Forgotten password?</a>
-                      <div class="submit-button">
-                        <button class="btn btn-primary">Log In</button>
-                      </div>
-                    </div>
-                    <p class="error"></p>
-                  </form>
-                </div>
+                <div class="loginForm"></div>
                 <div class="registerForm">
                   <form class="form-register">
                     <div class="form">
@@ -303,15 +270,22 @@
 </template>
 
 <script>
-import axios from "axios";
+import { Auth } from "@/services";
 
 export default {
   name: "App",
 
-  data: () => ({
+  data() {
+    return {
+      auth: Auth.state,
+    };
     //
-  }),
+  },
   methods: {
+    logout() {
+      Auth.logout();
+      this.$router.go();
+    },
     modalLoginRegister() {
       $("#LoginRegister").modal("show");
     },
@@ -348,11 +322,102 @@ nav {
 }
 
 a {
+  cursor: pointer !important;
   color: white !important;
 }
 
 a:hover {
   color: rgb(224, 224, 224) !important;
+}
+
+.modal form label {
+  margin-top: 10px;
+}
+
+.loginRegisterBtn {
+  padding: 10px;
+}
+
+.loginButton {
+  background-color: #25d294;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  width: 100%;
+  transition: 0.2s;
+}
+
+.loginButton:hover {
+  background-color: #089965;
+  transition: 0.2s;
+}
+
+.registerButton {
+  width: 100%;
+  background-color: #25d294;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  transition: 0.2s;
+}
+
+.registerButton:hover {
+  background-color: #089965;
+  transition: 0.2s;
+}
+
+.btnLogin {
+  background-color: #25d294;
+  border-color: #25d294;
+  transition: 0.2s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btnLogin:hover {
+  background-color: #089965;
+  border-color: #089965;
+  transition: 0.2s;
+}
+
+.btnRegister {
+  background-color: #25d294;
+  border-color: #25d294;
+  transition: 0.2s;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.btnRegister:hover {
+  background-color: #089965;
+  border-color: #089965;
+  transition: 0.2s;
+}
+
+.passwordreset {
+  color: #25d294 !important;
+  transition: 0.2s;
+}
+
+.passwordreset:hover {
+  color: #089965 !important;
+  transition: 0.2s;
+}
+
+.form-check-input {
+  margin-top: 15px;
+  box-shadow: none;
+}
+
+.form-check-input:checked {
+  background-color: #25d294;
+  border-color: #25d294;
+}
+
+.form-check-input:focus {
+  color: white;
+  outline: none;
+  box-shadow: none;
 }
 
 .nav-logo {
