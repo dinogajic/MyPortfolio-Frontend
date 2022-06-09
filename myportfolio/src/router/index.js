@@ -30,6 +30,11 @@ const routes = [
     name: 'Login',
     component: () => import('../views/Login.vue')
   },
+  {
+    path: '/register',
+    name: 'Register',
+    component: () => import('../views/Register.vue')
+  },
 ]
 
 const router = new VueRouter({
@@ -39,7 +44,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/"];
+  const publicPages = ["/login", "/register"];
   const loginNeeded = !publicPages.includes(to.path);
   const user = Auth.getUser();
 

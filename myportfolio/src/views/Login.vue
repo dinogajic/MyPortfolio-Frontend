@@ -60,7 +60,9 @@ export default {
       console.log("Rezultat prijave", success);
 
       if (success == true) {
-        this.$router.push({ name: "Home" });
+        this.$router.push({ name: "Profile" });
+      } else {
+        this.$router.go();
       }
     },
   },

@@ -2,14 +2,17 @@
   <div class="profile">
     <div class="container rounded bg-white mt-5 mb-5">
       <div class="row">
-        <div class="col-md-3 border-right">
+        <div
+          v-for="data in userData"
+          :key="data.id"
+          class="col-md-3 border-right"
+        >
           <div
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
               <croppa
                 class="rounded-circle"
-                v-model="croppa"
                 :width="200"
                 :height="200"
                 :image-border-radius="225"
@@ -17,8 +20,9 @@
               ></croppa>
             </div>
 
-            <span class="mt-2">Rene Borić</span
-            ><span class="text-black-50 mt-2">rboric1901@gmaill.com</span
+            <span class="mt-2">
+              {{ data.firstName }} {{ " " }} {{ data.lastName }}</span
+            ><span class="text-black-50 mt-2">{{ data.email }}</span
             ><span>
               <label class="btn btn-primary profile-button mt-3">
                 <input type="file" />
@@ -139,9 +143,7 @@ export default {
   },
   methods: {
     async getUserData() {
-      const response = await axios(
-        "https://my-portfolio-wa.herokuapp.com/user"
-      );
+      const response = await axios("http://localhost:3000/user");
       this.userData.push({
         _id: response.data._id,
         email: response.data.email,

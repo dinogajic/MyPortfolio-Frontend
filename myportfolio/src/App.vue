@@ -144,128 +144,21 @@
                   d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"
                 /></svg
             ></a>
+            <a class="nav-link" @click="goToLogin()" v-if="!auth.authenticated">
+              LOG IN
+            </a>
             <a
               class="nav-link"
-              @click="modalLoginRegister()"
+              @click="goToRegister()"
               v-if="!auth.authenticated"
             >
-              LOG IN
+              SIGN UP
             </a>
           </div>
         </div>
       </div>
     </nav>
     <router-view />
-    <!-- MODAL LOGIN/REGISTER -->
-    <div
-      class="modal fade"
-      id="LoginRegister"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="LoginRegisterTitle"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="container">
-              <div class="row">
-                <div class="col-sm-6 loginRegisterBtn">
-                  <button @click="loginBtn()" class="loginButton">Login</button>
-                </div>
-                <div class="col-sm-6 loginRegisterBtn">
-                  <button @click="registerBtn()" class="registerButton">
-                    Register
-                  </button>
-                </div>
-              </div>
-              <div class="row">
-                <div class="loginForm"></div>
-                <div class="registerForm">
-                  <form class="form-register">
-                    <div class="form">
-                      <div class="form-group">
-                        <label for="inputrIme">Name</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="inputrIme"
-                          placeholder="First Name"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="inputrPrezime">Surname</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="inputrPrezime"
-                          placeholder="Surname"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="inputrEmail">Email adresa</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          id="inputrEmail"
-                          aria-describedby="emailHelp"
-                          placeholder="Email adresa"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="inputrPassword">Password</label>
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="inputrPassword"
-                          placeholder="Password"
-                          required
-                        />
-                      </div>
-                      <div class="form-group">
-                        <label for="inputrRepeatPassword"
-                          >Repeat password</label
-                        >
-                        <input
-                          type="password"
-                          class="form-control"
-                          id="inputrRepeatPassword"
-                          placeholder="Repeat password"
-                          required
-                        />
-                      </div>
-                      <div class="form-check form-switch">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          role="switch"
-                          id="flexSwitchCheckDefault"
-                          @click="showPassword()"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="flexSwitchCheckDefault"
-                          >Show password</label
-                        >
-                      </div>
-                      <div class="submit-button">
-                        <button class="btnRegister btn btn-primary">
-                          Register
-                        </button>
-                      </div>
-                    </div>
-                    <p class="error"></p>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -279,23 +172,17 @@ export default {
     return {
       auth: Auth.state,
     };
-    //
   },
   methods: {
     logout() {
       Auth.logout();
       this.$router.go();
     },
-    modalLoginRegister() {
-      $("#LoginRegister").modal("show");
+    goToLogin() {
+      this.$router.push({ name: "Login" });
     },
-    loginBtn() {
-      $(".loginForm").css({ display: "block" });
-      $(".registerForm").css({ display: "none" });
-    },
-    registerBtn() {
-      $(".registerForm").css({ display: "block" });
-      $(".loginForm").css({ display: "none" });
+    goToRegister() {
+      this.$router.push({ name: "Register" });
     },
   },
 };
