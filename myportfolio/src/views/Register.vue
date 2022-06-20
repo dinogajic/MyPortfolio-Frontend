@@ -100,19 +100,6 @@ export default {
         password: this.password,
       });
       console.log(res);
-      /* axios
-        .post("http://localhost:3000/register", {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          password: this.password,
-        })
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        }); */
     },
   },
 };

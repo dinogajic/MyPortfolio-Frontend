@@ -5,23 +5,24 @@ import $router from "@/router"
 let Service = axios.create({
     baseURL: 'http://localhost:3000',
     timeout: 1000,
+    
 })
 
-Service.interceptors.request.use((request) => {
-     try {
+axios.interceptors.request.use((request) => {
+    try {
         request.headers['Authorization'] = 'Bearer ' + Auth.getToken();
     } catch (e) {
         console.error(e);
     }
     return request;
-})
+});
 
-Service.interceptors.request.use((response) => response, (error) => {
+axios.interceptors.response.use((response) => response, (error) => {
     if(error.response.status == 401 || error.response.status == 403 ) {
         Auth.logout();
         $router.go();
     }
-})
+});
 
 
 let Auth = {

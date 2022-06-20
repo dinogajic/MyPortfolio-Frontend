@@ -150,7 +150,6 @@ export default {
         firstName: response.data.firstName,
         lastName: response.data.lastName,
       });
-      console.log(response.data);
     },
   },
 };

@@ -173,6 +173,7 @@ export default {
       auth: Auth.state,
     };
   },
+  mounted() {},
   methods: {
     logout() {
       Auth.logout();
