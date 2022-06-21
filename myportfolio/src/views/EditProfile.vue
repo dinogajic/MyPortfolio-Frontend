@@ -33,9 +33,11 @@
               <h4 class="text-right">Profile Settings</h4>
             </div>
             <div class="row mt-2">
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <label class="labels">Name</label
                 ><input
+                  required
+                  v-model="firstName"
                   type="text"
                   class="form-control"
                   placeholder="Name..."
@@ -45,17 +47,21 @@
               <div class="col-md-6">
                 <label class="labels">Surname</label
                 ><input
+                  required
+                  v-model="lastName"
                   type="text"
                   class="form-control"
                   value=""
                   placeholder="Surname..."
                 />
-              </div>
+              </div> -->
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
                 <label class="labels">Mobile Number</label
                 ><input
+                  required
+                  v-model="mobile_number"
                   type="text"
                   class="form-control"
                   placeholder="Enter Phone Number..."
@@ -63,62 +69,44 @@
                 />
               </div>
               <div class="col-md-12">
-                <label class="labels">Address Line 1</label
+                <label class="labels">Address</label
                 ><input
+                  required
+                  v-model="address"
                   type="text"
                   class="form-control"
-                  placeholder="Enter Address Line 1..."
+                  placeholder="Enter Address..."
                   value=""
                 />
               </div>
-              <div class="col-md-12">
-                <label class="labels">Address Line 2</label
-                ><input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Address Line 2..."
-                  value=""
-                />
-              </div>
+
               <div class="col-md-12">
                 <label class="labels">Postcode</label
                 ><input
+                  required
+                  v-model="postcode"
                   type="text"
                   class="form-control"
                   placeholder="Enter Postcode..."
                   value=""
                 />
               </div>
-              <div class="col-md-12">
-                <label class="labels">State</label
-                ><input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter State..."
-                  value=""
-                />
-              </div>
-              <div class="col-md-12">
-                <label class="labels">Area</label
-                ><input
-                  type="text"
-                  class="form-control"
-                  placeholder="Enter Area..."
-                  value=""
-                />
-              </div>
-              <div class="col-md-12">
+              <!--  <div class="col-md-12">
                 <label class="labels">Email</label
                 ><input
+                  required
+                  v-model="email"
                   type="text"
                   class="form-control"
                   placeholder="Enter Your E-mail..."
                   value=""
                 />
-              </div>
+              </div> -->
               <div class="col-md-12">
                 <label class="labels">Education</label
                 ><input
+                  required
+                  v-model="education"
                   type="text"
                   class="form-control"
                   placeholder="Education..."
@@ -127,22 +115,15 @@
               </div>
             </div>
             <div class="row mt-3">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <label class="labels">Country</label
                 ><input
+                  required
+                  v-model="country"
                   type="text"
                   class="form-control"
                   placeholder="Country..."
                   value=""
-                />
-              </div>
-              <div class="col-md-6">
-                <label class="labels">State/Region</label
-                ><input
-                  type="text"
-                  class="form-control"
-                  value=""
-                  placeholder="State..."
                 />
               </div>
             </div>
@@ -194,7 +175,11 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
           <div class="mt-2 text-center">
-            <button class="btn btn-primary profile-button" type="button">
+            <button
+              class="btn btn-primary profile-button"
+              type="button"
+              @click="updateUser"
+            >
               Save Profile
             </button>
           </div>
@@ -206,12 +191,56 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "Profile",
   data() {
     return {
+      userID: [],
+      /* firstName: "",
+      lastName: "",
+      email: "", */
+      mobile_number: "",
+      address: "",
+      postcode: "",
+      education: "",
+      country: "",
       imageReference: null,
     };
+  },
+  mounted() {
+    this.getUserData();
+  },
+  methods: {
+    async getUserData() {
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/user"
+      );
+      this.userID.push({
+        _id: response.data._id,
+      });
+      console.log(this.userID[0]._id);
+    },
+    async updateUser() {
+      const res = await axios.patch(
+        "http://localhost:3000/user/" + this.userID[0]._id,
+        {
+          /* firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email, */
+          userData: {
+            mobile_number: this.mobile_number,
+            country: this.country,
+            address: this.address,
+            postcode: this.postcode,
+            education: this.education,
+          },
+        }
+      );
+      alert("ASDASD");
+      this.$router.push({ name: "Profile" });
+    },
   },
 };
 </script>

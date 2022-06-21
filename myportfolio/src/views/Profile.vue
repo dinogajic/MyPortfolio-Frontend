@@ -114,8 +114,8 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-5">
-          <div class="mt-2 text-center">
-            <router-link to="/edit-profile"
+          <div class="mt-2 text-center" v-for="data in userData" :key="data.id">
+            <router-link :to="'/edit-profile/' + data._id"
               ><button class="btn btn-primary profile-button" type="button">
                 Edit Profile
               </button></router-link
@@ -143,12 +143,19 @@ export default {
   },
   methods: {
     async getUserData() {
-      const response = await axios("http://localhost:3000/user");
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/user"
+      );
       this.userData.push({
         _id: response.data._id,
         email: response.data.email,
         firstName: response.data.firstName,
         lastName: response.data.lastName,
+        country: response.data.userData.country,
+        mobile_number: response.data.userData.mobile_number,
+        address: response.data.userData.address,
+        postcode: response.data.userData.postcode,
+        education: response.data.userData.education,
       });
     },
   },

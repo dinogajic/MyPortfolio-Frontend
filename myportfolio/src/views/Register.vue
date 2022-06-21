@@ -93,12 +93,22 @@ export default {
   },
   methods: {
     async registerUser() {
-      const res = await axios.post("http://localhost:3000/register", {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        password: this.password,
-      });
+      const res = await axios.post(
+        "https://my-portfolio-wa.herokuapp.com/register",
+        {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.email,
+          password: this.password,
+          userData: {
+            country: null,
+            mobile_number: null,
+            address: null,
+            postcode: null,
+            education: null,
+          },
+        }
+      );
       console.log(res);
     },
   },
