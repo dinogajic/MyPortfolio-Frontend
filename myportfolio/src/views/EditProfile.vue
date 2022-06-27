@@ -27,17 +27,21 @@
             >
           </div>
         </div>
-        <div class="col-md-5 border-right">
+        <div
+          class="col-md-5 border-right"
+          v-for="data in userID"
+          :key="data.id"
+        >
           <div class="p-3 py-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="text-right">Profile Settings</h4>
             </div>
             <div class="row mt-2">
-              <!-- <div class="col-md-6">
+              <div class="col-md-6">
                 <label class="labels">Name</label
                 ><input
                   required
-                  v-model="firstName"
+                  v-model="data.firstName"
                   type="text"
                   class="form-control"
                   placeholder="Name..."
@@ -48,20 +52,20 @@
                 <label class="labels">Surname</label
                 ><input
                   required
-                  v-model="lastName"
+                  v-model="data.lastName"
                   type="text"
                   class="form-control"
                   value=""
                   placeholder="Surname..."
                 />
-              </div> -->
+              </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
                 <label class="labels">Mobile Number</label
                 ><input
                   required
-                  v-model="mobile_number"
+                  v-model="data.mobile_number"
                   type="text"
                   class="form-control"
                   placeholder="Enter Phone Number..."
@@ -72,7 +76,7 @@
                 <label class="labels">Address</label
                 ><input
                   required
-                  v-model="address"
+                  v-model="data.address"
                   type="text"
                   class="form-control"
                   placeholder="Enter Address..."
@@ -84,29 +88,29 @@
                 <label class="labels">Postcode</label
                 ><input
                   required
-                  v-model="postcode"
+                  v-model="data.postcode"
                   type="text"
                   class="form-control"
                   placeholder="Enter Postcode..."
                   value=""
                 />
               </div>
-              <!--  <div class="col-md-12">
+              <div class="col-md-12">
                 <label class="labels">Email</label
                 ><input
                   required
-                  v-model="email"
+                  v-model="data.email"
                   type="text"
                   class="form-control"
                   placeholder="Enter Your E-mail..."
                   value=""
                 />
-              </div> -->
+              </div>
               <div class="col-md-12">
                 <label class="labels">Education</label
                 ><input
                   required
-                  v-model="education"
+                  v-model="data.education"
                   type="text"
                   class="form-control"
                   placeholder="Education..."
@@ -119,7 +123,7 @@
                 <label class="labels">Country</label
                 ><input
                   required
-                  v-model="country"
+                  v-model="data.country"
                   type="text"
                   class="form-control"
                   placeholder="Country..."
@@ -198,9 +202,9 @@ export default {
   data() {
     return {
       userID: [],
-      /* firstName: "",
+      firstName: "",
       lastName: "",
-      email: "", */
+      email: "",
       mobile_number: "",
       address: "",
       postcode: "",
@@ -219,22 +223,30 @@ export default {
       );
       this.userID.push({
         _id: response.data._id,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        email: response.data.email,
+        mobile_number: response.data.userData.mobile_number,
+        address: response.data.userData.address,
+        postcode: response.data.userData.postcode,
+        education: response.data.userData.education,
+        country: response.data.userData.country,
       });
-      console.log(this.userID[0]._id);
+      console.log(this.userID[0].mobile_number);
     },
     async updateUser() {
       const res = await axios.patch(
-        "http://localhost:3000/user/" + this.userID[0]._id,
+        "https://my-portfolio-wa.herokuapp.com/user/" + this.userID[0]._id,
         {
-          /* firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email, */
+          firstName: this.userID[0].firstName,
+          lastName: this.userID[0].lastName,
+          email: this.userID[0].email,
           userData: {
-            mobile_number: this.mobile_number,
-            country: this.country,
-            address: this.address,
-            postcode: this.postcode,
-            education: this.education,
+            mobile_number: this.userID[0].mobile_number,
+            country: this.userID[0].country,
+            address: this.userID[0].address,
+            postcode: this.userID[0].postcode,
+            education: this.userID[0].education,
           },
         }
       );
@@ -249,6 +261,15 @@ export default {
 input[type="file"] {
   display: none;
 }
+
+input {
+  color: #089965 !important;
+  opacity: 0.7 !important; /* Firefox */
+  font-weight: 400;
+  letter-spacing: 0px;
+  font-style: italic;
+}
+
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;

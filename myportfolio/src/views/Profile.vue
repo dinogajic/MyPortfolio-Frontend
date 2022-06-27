@@ -174,6 +174,10 @@ input[type="file"] {
 }
 label {
   font-size: 15px !important;
+  color: #089965;
+}
+
+div p {
 }
 
 ::placeholder {
@@ -241,6 +245,11 @@ label {
   transition: 0.3s;
 }
 
+/* .border-right {
+  height: 100vh;
+  border-right: 1px solid gray;
+}
+ */
 .add-experience:hover {
   background: #25d294;
   color: #fff;
