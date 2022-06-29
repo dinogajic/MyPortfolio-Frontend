@@ -19,9 +19,13 @@
           </v-carousel-item>
         </v-carousel>
 
-        <v-card-title><a href="">Bevidence</a></v-card-title>
+        <v-card-title
+          ><a href="">{{ userPortfolio.projectTitle }}</a></v-card-title
+        >
 
-        <v-card-subtitle> <a href=""></a>HR management</v-card-subtitle>
+        <v-card-subtitle>
+          <a href=""></a>{{ userPortfolio.projectSubtitle }}</v-card-subtitle
+        >
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
@@ -47,17 +51,10 @@
           <div v-show="show">
             <v-divider></v-divider>
             <v-card-text>
-              Web aplikaciju će koristiti razna poduzeća kako bi si vlasnici
-              olakšali vođenje evidencije podataka o radnicima. Aplikacija će
-              sadržavati sustav registracije korisnika (vlasnik poduzeća).
-              Korisnik (vlasnik poduzeća) će imati posebno sučelje (dashboard)
-              gdje će obavljati funkcije upravljanja poduzećem npr. registracija
-              poduzeća (mogućnost registracije više poduzeća), dodavanje novih
-              radnika, evidencija radnih sati, evidencija godišnjih odmora i
-              ostalih odsustva sa posla, izračun plaća sa svim dodatcima..
+              {{ userPortfolio.projectDescription }}
             </v-card-text>
             <v-card-text>
-              <a href="">Git</a>
+              <a href="">{{ userPortfolio.projectLinks }}</a>
             </v-card-text>
           </div>
         </v-expand-transition>
@@ -67,7 +64,10 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
+  props: ["userPortfolio"],
   name: "PortfolioComponent",
   data() {
     return {
@@ -82,6 +82,24 @@ export default {
       cycle: false,
       slides: ["First", "Second", "Third", "Fourth", "Fifth"],
     };
+  },
+  mounted() {
+    /* this.getUserPortfolio(); */
+  },
+  methods: {
+    /* async getUserPortfolio() {
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/portfolio"
+      );
+      this.userPortfolio.push({
+        projectTitle: response.data.projectTitle,
+        projectSubtitle: response.data.projectSubtitle,
+        projectDescription: response.data.projectDescription,
+        projectLinks: response.data.projectLinks,
+        userEmail: response.data.userEmail,
+      });
+      console.log(response.data);
+    }, */
   },
 };
 </script>

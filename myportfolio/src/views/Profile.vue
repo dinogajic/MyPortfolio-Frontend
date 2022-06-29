@@ -177,9 +177,6 @@ label {
   color: #089965;
 }
 
-div p {
-}
-
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #84e3c1 !important;

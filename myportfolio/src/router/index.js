@@ -35,6 +35,11 @@ const routes = [
     name: 'Register',
     component: () => import('../views/Register.vue')
   },
+  {
+    path: '/create-portfolio',
+    name: 'CreatePortfolio',
+    component: () => import('../views/CreatePortfolio.vue')
+  },
 ]
 
 const router = new VueRouter({
