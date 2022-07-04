@@ -104,7 +104,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .card img {
   height: auto;
   max-height: 300px;

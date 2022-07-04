@@ -188,7 +188,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;
