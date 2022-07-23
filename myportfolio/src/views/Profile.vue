@@ -11,23 +11,12 @@
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
-              <croppa
-                class="rounded-circle"
-                :width="200"
-                :height="200"
-                :image-border-radius="225"
-                prevent-white-space
-              ></croppa>
+              <img id="profilePicture" :src="imageRef + image" width=200px height="200px" alt="">
             </div>
 
             <span class="mt-2">
               {{ data.firstName }} {{ " " }} {{ data.lastName }}</span
             ><span class="text-black-50 mt-2">{{ data.email }}</span
-            ><span>
-              <label class="btn btn-primary profile-button mt-3">
-                <input type="file" />
-                Choose Picture
-              </label></span
             >
           </div>
         </div>
@@ -134,12 +123,17 @@ export default {
   name: "Profile",
   data() {
     return {
+      imageRef: "data:image/png;base64,",
+      image: "",
+      imageId: "",
       userData: [],
-      imageReference: null,
+      imageReference: null
+
     };
   },
   mounted() {
     this.getUserData();
+    this.getImage();
   },
   methods: {
     async getUserData() {
@@ -158,6 +152,15 @@ export default {
         education: response.data.userData.education,
       });
     },
+    async getImage() {
+      const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
+      console.log(response)
+      this.imageId = response.data._id,
+      this.image = btoa(
+          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
+        )  
+        console.log(this.imageId)
+    }     
   },
 };
 </script>
@@ -240,6 +243,10 @@ label {
 
 .add-experience {
   transition: 0.3s;
+}
+
+#profilePicture {
+  border-radius: 100px;
 }
 
 /* .border-right {

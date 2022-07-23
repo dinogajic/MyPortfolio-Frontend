@@ -44,6 +44,7 @@ export default {
           projectDescription: portfolio.projectDescription,
           projectLinks: portfolio.projectLinks,
           userEmail: portfolio.userEmail,
+          template: portfolio.template
         });
       });
       console.log(this.userPortfolios);

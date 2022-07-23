@@ -7,23 +7,15 @@
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
-              <croppa
-                class="rounded-circle"
-                v-model="croppa"
-                :width="200"
-                :height="200"
-                :image-border-radius="225"
-                prevent-white-space
-              ></croppa>
+            <form action="https://my-portfolio-wa.herokuapp.com/image" method="post" enctype="multipart/form-data">
+              Select image to upload:
+              <input type="file" name="image" id="fileToUpload">
+              <input type="text" name="name">
+              <input type="submit" value="Upload Image" name="submit">
+            </form>
             </div>
-
             <span class="mt-2">Rene Borić</span
             ><span class="text-black-50 mt-2">rboric1901@gmaill.com</span
-            ><span>
-              <label class="btn btn-primary profile-button mt-3">
-                <input type="file" />
-                Choose Picture
-              </label></span
             >
           </div>
         </div>
@@ -210,7 +202,7 @@ export default {
       postcode: "",
       education: "",
       country: "",
-      imageReference: null,
+      image: null,
     };
   },
   mounted() {
@@ -232,7 +224,6 @@ export default {
         education: response.data.userData.education,
         country: response.data.userData.country,
       });
-      console.log(this.userID[0].mobile_number);
     },
     async updateUser() {
       const res = await axios.patch(
@@ -253,22 +244,27 @@ export default {
       alert("ASDASD");
       this.$router.push({ name: "Profile" });
     },
+    async updateProfileImage() {
+      const res = await axios.post(
+        "https://my-portfolio-wa.herokuapp.com/image", {
+          name: "asdasdasd",
+          image: this.image
+        }
+      )
+    }
   },
 };
 </script>
 
 <style scoped>
-input[type="file"] {
-  display: none;
-}
 
-input {
+/* input {
   color: #089965 !important;
-  opacity: 0.7 !important; /* Firefox */
+  opacity: 0.7 !important; 
   font-weight: 400;
   letter-spacing: 0px;
   font-style: italic;
-}
+} */
 
 .custom-file-upload {
   border: 1px solid #ccc;
@@ -276,9 +272,9 @@ input {
   padding: 6px 12px;
   cursor: pointer;
 }
-label {
+/* label {
   font-size: 15px !important;
-}
+} */
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */

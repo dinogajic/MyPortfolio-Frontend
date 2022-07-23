@@ -209,7 +209,7 @@ export default {
       projectSubtitle: "",
       projectDescription: "",
       projectLinks: "",
-      templateChoice: 1,
+      templateChoice: "1",
     };
   },
   methods: {
@@ -224,6 +224,7 @@ export default {
           projectSubtitle: this.projectSubtitle,
           projectDescription: this.projectDescription,
           projectLinks: this.projectLinks,
+          templateChoice: this.templateChoice,
         }
       );
       alert("Portfolio created");
