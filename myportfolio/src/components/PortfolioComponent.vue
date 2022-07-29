@@ -2,7 +2,6 @@
   <v-app>
     <div v-if="userPortfolio.template == 1">
     <div name="template1" class="col-sm-12">
-      <h1>TEMPLATE1</h1>
       <v-card class="mx-auto" max-width="500"
         ><v-system-bar lights-out></v-system-bar>
         <v-carousel
@@ -65,7 +64,6 @@
     <!-- --->
     <div v-if="userPortfolio.template == 2">
      <div name="template2" class="col-sm-12">
-      <h1>TEMPLATE2</h1>
       <v-card class="mx-auto" max-width="500"
         ><v-system-bar lights-out></v-system-bar>
         <v-carousel
@@ -130,7 +128,6 @@
     <!-- --->
     <div v-if="userPortfolio.template == 3">
      <div name="template2" class="col-sm-12">
-      <h1>TEMPLATE3</h1>
       <v-card class="mx-auto" max-width="500"
         ><v-system-bar lights-out></v-system-bar>
         <v-carousel

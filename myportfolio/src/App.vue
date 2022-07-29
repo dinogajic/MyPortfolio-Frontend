@@ -188,7 +188,8 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 ::-webkit-scrollbar {
   display: none;
@@ -200,8 +201,9 @@ html {
   scrollbar-width: none; /* Firefox */
 }
 
-* {
-  font-family: "Oswald", sans-serif;
+body {
+  margin: 0;
+  padding: 0;
 }
 
 nav {

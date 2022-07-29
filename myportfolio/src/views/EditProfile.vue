@@ -1,28 +1,35 @@
 <template>
-  <div class="profile">
-    <div class="container rounded bg-white mt-5 mb-5">
+<v-app>
+  <div class="profile py-10" v-for="data in userID"
+          :key="data.id">
       <div class="row">
         <div class="col-md-3 border-right">
           <div
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
-            <form action="https://my-portfolio-wa.herokuapp.com/image" method="post" enctype="multipart/form-data">
-              Select image to upload:
-              <input type="file" name="image" id="fileToUpload">
-              <input type="text" name="name">
-              <input type="submit" value="Upload Image" name="submit">
+              <img id="profilePicture" :src="imageRef + image" width=200px height="200px" alt="">
+              <v-file-input
+                v-model="file"
+                name="image"
+                accept="image/png"
+                label="Choose an Image" 
+                @change="loading=false"            
+              />
+              <span class="text-black-50 font-weight-bold">Suggested size: 200x200</span>
+              <form>
+              <!-- <input type="text" name="name"> -->
+              <input :disabled="loading" type="button" @click="updateProfileImage" value="Save Image" name="submit" class="rl-cp w-100 mt-2">
             </form>
+            <div v-if="loading" class="mt-5 errorMessage">
+              {{ errorMessage }}
             </div>
-            <span class="mt-2">Rene Borić</span
-            ><span class="text-black-50 mt-2">rboric1901@gmaill.com</span
-            >
+            </div>
           </div>
         </div>
         <div
-          class="col-md-5 border-right"
-          v-for="data in userID"
-          :key="data.id"
+          class="col-md-5"
+          
         >
           <div class="p-3 py-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -32,7 +39,7 @@
               <div class="col-md-6">
                 <label class="labels">Name</label
                 ><input
-                  required
+                  disabled
                   v-model="data.firstName"
                   type="text"
                   class="form-control"
@@ -43,7 +50,7 @@
               <div class="col-md-6">
                 <label class="labels">Surname</label
                 ><input
-                  required
+                  disabled
                   v-model="data.lastName"
                   type="text"
                   class="form-control"
@@ -90,7 +97,7 @@
               <div class="col-md-12">
                 <label class="labels">Email</label
                 ><input
-                  required
+                  disabled
                   v-model="data.email"
                   type="text"
                   class="form-control"
@@ -170,9 +177,9 @@
       <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-5">
-          <div class="mt-2 text-center">
+          <div class="mt-2 text-center col-md-12 p-3">
             <button
-              class="btn btn-primary profile-button"
+              class="rl-cp w-100"
               type="button"
               @click="updateUser"
             >
@@ -183,7 +190,7 @@
         <div class="col-md-4"></div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -202,11 +209,16 @@ export default {
       postcode: "",
       education: "",
       country: "",
+      file: null,
+      imageRef: "data:image/png;base64,",
       image: null,
+      errorMessage: "",
+      loading: false,
     };
   },
   mounted() {
     this.getUserData();
+    this.getImage();
   },
   methods: {
     async getUserData() {
@@ -241,40 +253,44 @@ export default {
           },
         }
       );
-      alert("ASDASD");
       this.$router.push({ name: "Profile" });
     },
     async updateProfileImage() {
-      const res = await axios.post(
-        "https://my-portfolio-wa.herokuapp.com/image", {
-          name: "asdasdasd",
-          image: this.image
-        }
-      )
+      const data = new FormData();
+      if(this.file) {
+        data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.file.name.toLowerCase())
+        data.append("image", this.file)
+        await axios.post("https://my-portfolio-wa.herokuapp.com/image", data)
+        this.$router.push({ name: "Profile" })
+      } else {
+        this.loading = true
+        this.errorMessage = "Choose an image!"
+      }
+      
+
+
+      
+    },
+    async getImage() {
+      const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
+      console.log(response.data)
+      this.image = btoa(
+          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
+        )  
     }
   },
 };
+
+
 </script>
 
 <style scoped>
 
-/* input {
-  color: #089965 !important;
-  opacity: 0.7 !important; 
-  font-weight: 400;
-  letter-spacing: 0px;
-  font-style: italic;
-} */
-
-.custom-file-upload {
-  border: 1px solid #ccc;
-  display: inline-block;
-  padding: 6px 12px;
-  cursor: pointer;
+input:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
-/* label {
-  font-size: 15px !important;
-} */
+
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -304,29 +320,6 @@ export default {
   border-color: #84e3c1;
 }
 
-.profile-button {
-  background: #25d294;
-  box-shadow: none;
-  border: none;
-  color: white;
-  transition: 0.3s;
-}
-
-.profile-button:hover {
-  background: #25d294;
-  opacity: 0.7;
-  transition: 0.3s;
-}
-
-.profile-button:focus {
-  background: #25d294;
-  box-shadow: none !important;
-}
-
-.profile-button:active {
-  background: #25d294;
-  box-shadow: none !important;
-}
 
 .back:hover {
   color: #25d294;
@@ -347,5 +340,45 @@ export default {
   cursor: pointer;
   border: solid 1px #25d294;
   transition: 0.3s;
+}
+
+#profilePicture {
+  border-radius: 100px;
+}
+
+.errorMessage {
+  background-color: white ;
+  border: 1px solid red ;
+  color: red;
+  padding: 10px;
+}
+
+.rl-cp {
+  padding: 10px;
+  color: white;
+  border: 1px solid white ;
+  background-color: #089965 ;
+  transition: 0.2s;
+}
+
+.rl-cp:hover:enabled {
+  border: 1px solid #089965 ;
+  color: #089965 ;
+  background-color: white ;
+  transition: 0.2s;
+}
+
+/* Bootstrap */
+
+.form-control {
+  border-radius: 0px !important;
+}
+
+.col-md-6 {
+  padding: 6px !important;
+}
+
+.col-md-12 {
+  padding: 6px !important;
 }
 </style>

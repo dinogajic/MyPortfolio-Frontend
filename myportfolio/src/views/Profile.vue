@@ -1,6 +1,6 @@
 <template>
-  <div class="profile">
-    <div class="container rounded bg-white mt-5 mb-5">
+  <v-app>
+  <div class="py-10">
       <div class="row">
         <div
           v-for="data in userData"
@@ -14,7 +14,7 @@
               <img id="profilePicture" :src="imageRef + image" width=200px height="200px" alt="">
             </div>
 
-            <span class="mt-2">
+            <span class="mt-2 font-weight-bold">
               {{ data.firstName }} {{ " " }} {{ data.lastName }}</span
             ><span class="text-black-50 mt-2">{{ data.email }}</span
             >
@@ -105,7 +105,7 @@
         <div class="col-md-5">
           <div class="mt-2 text-center" v-for="data in userData" :key="data.id">
             <router-link :to="'/edit-profile/' + data._id"
-              ><button class="btn btn-primary profile-button" type="button">
+              ><button class="rl-cp w-100" type="button">
                 Edit Profile
               </button></router-link
             >
@@ -114,7 +114,7 @@
         <div class="col-md-4"></div>
       </div>
     </div>
-  </div>
+  </v-app>
 </template>
 
 <script>
@@ -154,12 +154,10 @@ export default {
     },
     async getImage() {
       const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
-      console.log(response)
-      this.imageId = response.data._id,
+      console.log(response.data)
       this.image = btoa(
           String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
         )  
-        console.log(this.imageId)
     }     
   },
 };
@@ -249,16 +247,36 @@ label {
   border-radius: 100px;
 }
 
-/* .border-right {
-  height: 100vh;
-  border-right: 1px solid gray;
-}
- */
 .add-experience:hover {
   background: #25d294;
   color: #fff;
   cursor: pointer;
   border: solid 1px #25d294;
   transition: 0.3s;
+}
+
+.rl-cp {
+  padding: 10px;
+  color: white;
+  border: 1px solid white ;
+  background-color: #089965 ;
+  transition: 0.2s;
+}
+
+.rl-cp:hover {
+  border: 1px solid #089965 ;
+  color: #089965 ;
+  background-color: white ;
+  transition: 0.2s;
+}
+
+/* Bootstrap */
+
+.col-md-6 {
+  padding: 6px !important;
+}
+
+.col-md-12 {
+  padding: 6px !important;
 }
 </style>

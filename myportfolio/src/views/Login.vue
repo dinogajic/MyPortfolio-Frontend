@@ -61,7 +61,7 @@ export default {
       console.log("Rezultat prijave", success);
 
       if (success == true) {
-        this.$router.push({ name: "Profile" });
+        this.$router.push({ name: "Home" });
       } else {
         this.$router.go();
       }

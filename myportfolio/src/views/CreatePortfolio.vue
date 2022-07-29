@@ -1,17 +1,21 @@
 <template>
   <div class="profile">
-    <div class="container rounded bg-white mt-5 mb-5">
       <div class="row">
-        <div class="col-md-3 border-right">
-          <select
-            class="dropdownBtn shadow-none form-select form-select-lg mb-3"
-            aria-label=".form-select-lg example"
-            v-model="templateChoice"
-          >
-            <option class="dropdown-item" value="1">One</option>
-            <option class="dropdown-item" value="2">Two</option>
-            <option class="dropdown-item" value="3">Three</option>
-          </select>
+        <div class="col-md-3 border-right p-3 py-5">
+          <div class="col-md-12">
+            <div>
+              Select template:
+            </div>
+            <select
+              class="dropdownBtn shadow-none form-select form-select-lg mb-3 "
+              aria-label=".form-select-lg example"
+              v-model="templateChoice"
+            >
+              <option class="dropdown-item" value="1">One</option>
+              <option class="dropdown-item" value="2">Two</option>
+              <option class="dropdown-item" value="3">Three</option>
+            </select>
+          </div>
         </div>
         <!-- Option 1 -->
         <div class="col-md-5 border-right" v-if="templateChoice == 1">
@@ -66,7 +70,7 @@
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject">123123</button>
+                <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
               </div>
             </div>
           </div>
@@ -124,7 +128,7 @@
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject">123123</button>
+                <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
               </div>
             </div>
           </div>
@@ -182,13 +186,12 @@
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject">123123</button>
+                <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     <div class="row">
       <div class="col-md-3"></div>
       <div class="col-md-5">
@@ -266,5 +269,34 @@ textarea:focus {
 .dropdown-item {
   color: #089965 !important;
   background-color: white;
+}
+
+.rl-cp {
+  padding: 10px;
+  color: white;
+  border: 1px solid white ;
+  background-color: #089965 ;
+  transition: 0.2s;
+}
+
+.rl-cp:hover:enabled {
+  border: 1px solid #089965 ;
+  color: #089965 ;
+  background-color: white ;
+  transition: 0.2s;
+}
+
+/* Bootstrap */
+
+.form-control {
+  border-radius: 0px !important;
+}
+
+.col-md-6 {
+  padding: 12px !important;
+}
+
+.col-md-12 {
+  padding: 12px !important;
 }
 </style>
