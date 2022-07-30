@@ -12,9 +12,9 @@
           height="300"
         >
           <v-carousel-item v-for="(slide, i) in slides" :key="i">
-            <v-sheet :color="colors[i]" height="100%" tile>
+            <v-sheet :color="images[i]" height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
-                <div class="text-h2">{{ slide }} Slide</div>
+                <div class="text-h2"><img :src="imageRef + image" alt=""></div>
               </v-row>
             </v-sheet>
           </v-carousel-item>
@@ -208,27 +208,25 @@ export default {
         "red lighten-2",
         "orange darken-1",
       ],
+      image: null,
+      images: [this.image],
       cycle: false,
       slides: ["First", "Second", "Third", "Fourth", "Fifth"],
+      imageRef: "data:image/png;base64,",
     };
   },
   mounted() {
     /* this.getUserPortfolio(); */
+    this.getImage();
   },
   methods: {
-    /* async getUserPortfolio() {
-      const response = await axios(
-        "https://my-portfolio-wa.herokuapp.com/portfolio"
-      );
-      this.userPortfolio.push({
-        projectTitle: response.data.projectTitle,
-        projectSubtitle: response.data.projectSubtitle,
-        projectDescription: response.data.projectDescription,
-        projectLinks: response.data.projectLinks,
-        userEmail: response.data.userEmail,
-      });
-      console.log(response.data);
-    }, */
+    async getImage() {
+      const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
+      console.log(response.data)
+      this.image = btoa(
+          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
+        )  
+    }   
   },
 };
 </script>

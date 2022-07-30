@@ -266,10 +266,6 @@ export default {
         this.loading = true
         this.errorMessage = "Choose an image!"
       }
-      
-
-
-      
     },
     async getImage() {
       const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");

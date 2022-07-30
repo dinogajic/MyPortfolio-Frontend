@@ -70,6 +70,20 @@
                 />
               </div>
               <div class="col-md-12">
+                <v-file-input
+                  v-model="files"
+                  name="image"
+                  accept="image/png"
+                  label="Choose images" 
+                  
+                  @change="loading=false"            
+                />
+                <span class="text-black-50 font-weight-bold">Suggested size: 200x200</span>
+                <form>
+                  <input type="button" @click="sendPortfolioImages()" value="Save Image" name="submit" class="rl-cp w-100 mt-2">
+                </form>
+              </div>
+              <div class="col-md-12">
                 <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
               </div>
             </div>
@@ -213,6 +227,7 @@ export default {
       projectDescription: "",
       projectLinks: "",
       templateChoice: "1",
+      files: null,
     };
   },
   methods: {
@@ -229,9 +244,28 @@ export default {
           projectLinks: this.projectLinks,
           templateChoice: this.templateChoice,
         }
-      );
-      alert("Portfolio created");
+      ).then((response) => {
+        if(response) {
+          alert(response.data)
+          this.$router.push({ name: "Portfolio" })
+        } else {
+          alert ("Failed to create portfolio")
+        }
+      })
+      
     },
+    async sendPortfolioImages() {
+      /*console.log(this.files) */
+      const data = new FormData();
+      /* this.files.forEach(async (file) => { */
+        /* console.log(file) */
+        data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.files.name.toLowerCase())
+        data.append("image", this.files)
+        await axios.post("https://my-portfolio-wa.herokuapp.com/profile_image", data)
+      /* } *//* ) */
+        
+
+    }
   },
 };
 </script>
