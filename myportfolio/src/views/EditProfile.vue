@@ -260,7 +260,7 @@ export default {
       if(this.file) {
         data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.file.name.toLowerCase())
         data.append("image", this.file)
-        await axios.post("https://my-portfolio-wa.herokuapp.com/image", data)
+        await axios.post("https://my-portfolio-wa.herokuapp.com/profile_image", data)
         this.$router.push({ name: "Profile" })
       } else {
         this.loading = true
@@ -268,11 +268,11 @@ export default {
       }
     },
     async getImage() {
-      const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
-      console.log(response.data)
-      this.image = btoa(
+      const response = await axios("https://my-portfolio-wa.herokuapp.com/profile_image");
+      /* this.image = btoa(
           String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
-        )  
+        )   */
+      this.image = response.data.img.data
     }
   },
 };

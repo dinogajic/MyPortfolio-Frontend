@@ -11,7 +11,7 @@
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
-              <img id="profilePicture" :src="imageRef + image" width=200px height="200px" alt="">
+              <img id="profilePicture" :src="imageRef + image" width=200px height="200px">
             </div>
 
             <span class="mt-2 font-weight-bold">
@@ -134,8 +134,16 @@ export default {
   mounted() {
     this.getUserData();
     this.getImage();
+    /* this.setPicture(); */
+    
   },
   methods: {
+    /* setPicture() {
+      console.log(document.getElementById("foo"))
+      if(document.getElementById("foo")) {
+        console.log("Hahahaha")
+      }
+    }, */
     async getUserData() {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/user"
@@ -153,11 +161,11 @@ export default {
       });
     },
     async getImage() {
-      const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
-      console.log(response.data)
-      this.image = btoa(
-          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
-        )  
+      const response = await axios ("https://my-portfolio-wa.herokuapp.com/profile_image");
+      /* this.image = btoa(
+          String.fromCharCode(...new Uint8Array(response.data.img.data))
+        )   */
+      this.image = response.data.img.data
     }     
   },
 };

@@ -3,7 +3,8 @@
     <div v-if="userPortfolio.template == 1">
     <div name="template1" class="col-sm-12">
       <v-card class="mx-auto" max-width="500"
-        ><v-system-bar lights-out></v-system-bar>
+        >
+        <v-system-bar lights-out></v-system-bar>
         <v-carousel
           :continuous="false"
           :cycle="cycle"
@@ -11,10 +12,10 @@
           delimiter-icon="mdi-minus"
           height="300"
         >
-          <v-carousel-item v-for="(slide, i) in slides" :key="i">
-            <v-sheet :color="images[i]" height="100%" tile>
+          <v-carousel-item  v-for="(portfolioImage, i) in portfolioImages" :key="i" >
+            <v-sheet height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
-                <div class="text-h2"><img :src="imageRef + image" alt=""></div>
+                <div class="text-h2"><img :src="imageRef + portfolioImages[i].img" alt=""></div>
               </v-row>
             </v-sheet>
           </v-carousel-item>
@@ -196,7 +197,7 @@
 import axios from "axios";
 
 export default {
-  props: ["userPortfolio"],
+  props: ["userPortfolio", "portfolioImages"],
   name: "PortfolioComponent",
   data() {
     return {
@@ -208,25 +209,17 @@ export default {
         "red lighten-2",
         "orange darken-1",
       ],
-      image: null,
       images: [this.image],
       cycle: false,
-      slides: ["First", "Second", "Third", "Fourth", "Fifth"],
       imageRef: "data:image/png;base64,",
     };
   },
   mounted() {
     /* this.getUserPortfolio(); */
-    this.getImage();
+    
   },
   methods: {
-    async getImage() {
-      const response = await axios ("https://my-portfolio-wa.herokuapp.com/image");
-      console.log(response.data)
-      this.image = btoa(
-          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
-        )  
-    }   
+      
   },
 };
 </script>

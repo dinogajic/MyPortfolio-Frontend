@@ -11,10 +11,13 @@
           v-for="userPortfolio in userPortfolios"
           :key="userPortfolio.id"
           :userPortfolio="userPortfolio"
+          :portfolioImages="portfolioImages"
         />
       </div>
     </div>
+  
   </div>
+  
 </template>
 
 <script>
@@ -26,10 +29,13 @@ export default {
   data() {
     return {
       userPortfolios: [],
+      portfolioImages: [],
     };
   },
   mounted() {
     this.getUserPortfolio();
+    this.getImages();
+    console.log(this.userPortfolios)
   },
   methods: {
     async getUserPortfolio() {
@@ -44,11 +50,24 @@ export default {
           projectDescription: portfolio.projectDescription,
           projectLinks: portfolio.projectLinks,
           userEmail: portfolio.userEmail,
-          template: portfolio.template
-        });
+          template: portfolio.template,
+          portofolioImages: this.portfolioImages
+        })
       });
-      console.log(this.userPortfolios);
     },
+    async getImages() {
+      const response = await axios ("https://my-portfolio-wa.herokuapp.com/portfolio_images");
+      response.data.forEach((img) => {
+        this.portfolioImages.push({
+            portfolioName: img.portfolioName,
+            img: img.img.data
+          })
+        })
+      /* this.image = btoa(
+          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
+        )   */
+      
+    } 
   },
   components: { PortfolioComponent },
 };

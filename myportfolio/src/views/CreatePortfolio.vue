@@ -75,12 +75,12 @@
                   name="image"
                   accept="image/png"
                   label="Choose images" 
-                  
+                  multiple
                   @change="loading=false"            
                 />
                 <span class="text-black-50 font-weight-bold">Suggested size: 200x200</span>
                 <form>
-                  <input type="button" @click="sendPortfolioImages()" value="Save Image" name="submit" class="rl-cp w-100 mt-2">
+                  <input type="button" @click="createProject();sendPortfolioImages()" value="Save Image" name="submit" class="rl-cp w-100 mt-2">
                 </form>
               </div>
               <div class="col-md-12">
@@ -255,16 +255,18 @@ export default {
       
     },
     async sendPortfolioImages() {
-      /*console.log(this.files) */
-      const data = new FormData();
-      /* this.files.forEach(async (file) => { */
-        /* console.log(file) */
-        data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.files.name.toLowerCase())
-        data.append("image", this.files)
-        await axios.post("https://my-portfolio-wa.herokuapp.com/profile_image", data)
-      /* } *//* ) */
+      console.log(this.files)
+       const data = new FormData();
+        data.append("name", Math.floor(Math.random() * 1000000000001))
+        data.append("portfolioName", this.projectTitle)
         
-
+        this.files.forEach(file => {
+            data.append("images", file)
+        })
+        await axios.post("https://my-portfolio-wa.herokuapp.com/portfolio_images", data).then(response => {
+          console.log(response)
+        })
+      
     }
   },
 };
