@@ -58,6 +58,7 @@ export default {
     async getImages() {
       const response = await axios ("https://my-portfolio-wa.herokuapp.com/portfolio_images");
       response.data.forEach((img) => {
+        console.log(img.name)
         this.portfolioImages.push({
             portfolioName: img.portfolioName,
             img: img.img.data
