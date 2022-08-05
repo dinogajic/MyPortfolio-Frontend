@@ -113,11 +113,11 @@
               <v-col
                 cols="12"
               >
-                <v-text-field
+                <v-textarea
                   label="Project description"
                   v-model="userPortfolio.projectDescription"
                   required
-                ></v-text-field>
+                ></v-textarea>
               </v-col>
               <v-col
                 cols="12"
@@ -278,11 +278,11 @@
               <v-col
                 cols="12"
               >
-                <v-text-field
+                <v-textarea
                   label="Project description"
                   v-model="userPortfolio.projectDescription"
                   required
-                ></v-text-field>
+                ></v-textarea>
               </v-col>
               <v-col
                 cols="12"
