@@ -177,7 +177,7 @@ export default {
   methods: {
     logout() {
       Auth.logout();
-      this.$router.go();
+      this.$router.push({ name: Login });
     },
     goToLogin() {
       this.$router.push({ name: "Login" });
