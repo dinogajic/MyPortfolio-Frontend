@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="registerUser();setProfileImage()" class="form-register">
+  <form @submit.prevent="registerUser" class="form-register">
     <div class="form">
       <div class="form-group">
         <label for="inputName">Name</label>
@@ -110,13 +110,6 @@ export default {
         }
       );
     },
-  async setProfileImage() {
-    console.log(123123)
-      /* const data = new FormData();
-        data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.file.name.toLowerCase())
-        data.append("image", this.file)
-        await axios.post("https://my-portfolio-wa.herokuapp.com/profile_image", data) */
-      }
-    },
+  },
 };
 </script>

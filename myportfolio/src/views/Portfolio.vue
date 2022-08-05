@@ -1,23 +1,24 @@
 <template>
-  <div class="portfolio">
-    <div class="btn-container">
-      <router-link to="/create-portfolio"
-        ><button class="rl-cp">CREATE PORTFOLIO</button></router-link
-      >
-    </div>
-    <div class="container">
-      <div class="row">
-        <portfolio-component
-          v-for="userPortfolio in userPortfolios"
-          :key="userPortfolio.id"
-          :userPortfolio="userPortfolio"
-          :portfolioImages="portfolioImages"
-        />
+  <v-app>
+    <div class="portfolio">
+      <div class="btn-container">
+        <router-link to="/create-portfolio"
+          ><button class="rl-cp">CREATE PORTFOLIO</button></router-link
+        > 
       </div>
+      <div class="container">
+        <div class="row">
+          <portfolio-component
+            v-for="userPortfolio in userPortfolios"
+            :key="userPortfolio.id"
+            :userPortfolio="userPortfolio"
+            :userData="userData"
+          />
+        </div>
+      </div>
+    
     </div>
-  
-  </div>
-  
+  </v-app>
 </template>
 
 <script>
@@ -29,13 +30,12 @@ export default {
   data() {
     return {
       userPortfolios: [],
-      portfolioImages: [],
+      userData: [],
     };
   },
   mounted() {
     this.getUserPortfolio();
-    this.getImages();
-    console.log(this.userPortfolios)
+    this.getUserData();
   },
   methods: {
     async getUserPortfolio() {
@@ -51,24 +51,27 @@ export default {
           projectLinks: portfolio.projectLinks,
           userEmail: portfolio.userEmail,
           template: portfolio.template,
-          portofolioImages: this.portfolioImages
-        })
+          imagesArray: portfolio.imagesArray
+        })  
       });
     },
-    async getImages() {
-      const response = await axios ("https://my-portfolio-wa.herokuapp.com/portfolio_images");
-      response.data.forEach((img) => {
-        console.log(img.name)
-        this.portfolioImages.push({
-            portfolioName: img.portfolioName,
-            img: img.img.data
-          })
-        })
-      /* this.image = btoa(
-          String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
-        )   */
-      
-    } 
+    async getUserData() {
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/user"
+      );
+      this.userData.push({
+        _id: response.data._id,
+        email: response.data.email,
+        firstName: response.data.firstName,
+        lastName: response.data.lastName,
+        country: response.data.userData.country,
+        mobile_number: response.data.userData.mobile_number,
+        address: response.data.userData.address,
+        postcode: response.data.userData.postcode,
+        education: response.data.userData.education,
+      });
+    },
+    
   },
   components: { PortfolioComponent },
 };

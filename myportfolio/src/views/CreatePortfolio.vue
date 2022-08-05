@@ -78,10 +78,6 @@
                   multiple
                   @change="loading=false"            
                 />
-                <span class="text-black-50 font-weight-bold">Suggested size: 200x200</span>
-                <form>
-                  <input type="button" @click="createProject();sendPortfolioImages()" value="Save Image" name="submit" class="rl-cp w-100 mt-2">
-                </form>
               </div>
               <div class="col-md-12">
                 <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
@@ -139,6 +135,16 @@
                   class="form-control shadow-none"
                   placeholder="Links..."
                   rows="6"
+                />
+              </div>
+              <div class="col-md-12">
+                <v-file-input
+                  v-model="files"
+                  name="image"
+                  accept="image/png"
+                  label="Choose images" 
+                  multiple
+                  @change="loading=false"            
                 />
               </div>
               <div class="col-md-12">
@@ -200,6 +206,16 @@
                 />
               </div>
               <div class="col-md-12">
+                <v-file-input
+                  v-model="files"
+                  name="image"
+                  accept="image/png"
+                  label="Choose images" 
+                  multiple
+                  @change="loading=false"            
+                />
+              </div>
+              <div class="col-md-12">
                 <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
               </div>
             </div>
@@ -235,16 +251,19 @@ export default {
       $(".dropdown-toggle").dropdown();
     },
     async createProject() {
+      const data = new FormData();
+      data.append("projectTitle", this.projectTitle)
+      data.append("projectSubtitle", this.projectSubtitle)
+      data.append("projectDescription", this.projectDescription)
+      data.append("projectLinks", this.projectLinks)
+      data.append("templateChoice", this.templateChoice)
+        this.files.forEach(file => {
+            data.append("images", file)
+        })
+
       const res = await axios.post(
-        "https://my-portfolio-wa.herokuapp.com/portfolio",
-        {
-          projectTitle: this.projectTitle,
-          projectSubtitle: this.projectSubtitle,
-          projectDescription: this.projectDescription,
-          projectLinks: this.projectLinks,
-          templateChoice: this.templateChoice,
-        }
-      ).then((response) => {
+        "https://my-portfolio-wa.herokuapp.com/portfolio", data)
+        .then((response) => {
         if(response) {
           alert(response.data)
           this.$router.push({ name: "Portfolio" })
@@ -254,8 +273,7 @@ export default {
       })
       
     },
-    async sendPortfolioImages() {
-      console.log(this.files)
+    /* async sendPortfolioImages() {
        const data = new FormData();
         data.append("name", Math.floor(Math.random() * 1000000000001))
         data.append("portfolioName", this.projectTitle)
@@ -267,7 +285,7 @@ export default {
           console.log(response)
         })
       
-    }
+    } */
   },
 };
 </script>
