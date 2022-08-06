@@ -35,7 +35,7 @@
               <v-img src="@/assets/dummy.png"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ this.userData[0].firstName + this.userData[0].lastName }}</v-list-item-title>
+              <v-list-item-title v-for="(user, i) in userData" :key="i">{{ user.firstName + " " + user.lastName }}</v-list-item-title>
               <v-list-item-subtitle>Author</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -104,11 +104,11 @@
               <v-col
                 cols="12"
               > 
-                <v-textarea
+                <v-text-field
                   label="Project subtitle"
                   v-model="userPortfolio.projectSubtitle"
                   required
-                ></v-textarea>
+                ></v-text-field>
               </v-col>
               <v-col
                 cols="12"
@@ -200,7 +200,7 @@
               <v-img src="@/assets/dummy.png"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ this.userData[0].firstName + this.userData[0].lastName }}</v-list-item-title>
+              <v-list-item-title v-for="(user, i) in userData" :key="i">{{ user.firstName + " " + user.lastName }}</v-list-item-title>
               <v-list-item-subtitle>Author</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -365,7 +365,7 @@
               <v-img src="@/assets/dummy.png"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ this.userData[0].firstName + this.userData[0].lastName }}</v-list-item-title>
+              <v-list-item-title v-for="(user, i) in userData" :key="i">{{ user.firstName + " " + user.lastName }}</v-list-item-title>
               <v-list-item-subtitle>Author</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
@@ -523,14 +523,17 @@ export default {
           data.append("projectSubtitle", this.userPortfolio.projectSubtitle)
           data.append("projectDescription", this.userPortfolio.projectDescription)
           data.append("projectLinks", this.userPortfolio.projectLinks)
-          data.append("templateChoice", 1)
+          data.append("templateChoice", this.userPortfolio.template)
           this.files.forEach(file => {
               data.append("images", file)
           })
         const response = await axios.patch("https://my-portfolio-wa.herokuapp.com/portfolio/" + id, data)
+
+        this.$router.go()
     },
     async deletePortfolio(id) {
-        axios.delete("https://my-portfolio-wa.herokuapp.com/portfolio/" + id)
+        await axios.delete("https://my-portfolio-wa.herokuapp.com/portfolio/" + id)
+        this.$router.go()
     },
   },
 };
@@ -542,13 +545,4 @@ export default {
   max-height: 300px;
 }
 
-.v-card__text a {
-  color: red !important;
-  text-decoration: none;
-}
-
-.v-card__title a {
-  color: #089965 !important;
-  text-decoration: none;
-}
 </style>

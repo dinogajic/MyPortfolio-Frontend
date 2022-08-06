@@ -1,5 +1,7 @@
 <template>
+ <v-app>
   <div class="profile">
+      <Dialog :alertResponseData="alertResponseData" :dialog="dialog"/>
       <div class="row">
         <div class="col-md-3 border-right p-3 py-5">
           <div class="col-md-12">
@@ -230,20 +232,24 @@
       <div class="col-md-4"></div>
     </div>
   </div>
+  </v-app>
 </template>
 <script>
 import axios from "axios";
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "CreatePortfolio",
   data() {
     return {
+      alertResponseData: "",
       projectTitle: "",
       projectSubtitle: "",
       projectDescription: "",
       projectLinks: "",
       templateChoice: "1",
       files: null,
+      dialog: false,
     };
   },
   methods: {
@@ -265,8 +271,9 @@ export default {
         "https://my-portfolio-wa.herokuapp.com/portfolio", data)
         .then((response) => {
         if(response) {
-          alert(response.data)
-          this.$router.push({ name: "Portfolio" })
+          this.alertResponseData = response.data
+          this.dialog = true;
+          
         } else {
           alert ("Failed to create portfolio")
         }
@@ -287,6 +294,7 @@ export default {
       
     } */
   },
+  components: { Dialog },
 };
 </script>
 
