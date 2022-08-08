@@ -107,14 +107,21 @@
               </div>
               <div class="col-md-12">
                 <label class="labels">Education</label
-                ><input
+                >
+                <div>
+                  <button class="labels form-add" @click="educationCount++">Add+</button>
+                </div>
+                <div v-for="(edu, i) in educationCount" :key="i">
+                  <input
                   required
-                  v-model="data.education"
+                  v-model="education[i]"
                   type="text"
-                  class="form-control"
+                  class="form-control form-education"
                   placeholder="Education..."
                   value=""
                 />
+                  <button class="labels form-remove" @click="removeEducation(education[i])">Remove</button>
+                </div>
               </div>
             </div>
             <div class="row mt-3">
@@ -207,8 +214,9 @@ export default {
       mobile_number: "",
       address: "",
       postcode: "",
-      education: "",
-      country: "",
+      education: [],
+      educationCount: null,
+      country: "", 
       file: null,
       imageRef: "data:image/png;base64,",
       image: null,
@@ -219,12 +227,17 @@ export default {
   mounted() {
     this.getUserData();
     this.getImage();
+    console.log(this.$refs.education)
   },
   methods: {
     async getUserData() {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/user"
       );
+      this.educationCount = response.data.userData.education.length + 1
+      await response.data.userData.education.forEach((edu) => {
+        this.education.push(edu)
+      })
       this.userID.push({
         _id: response.data._id,
         firstName: response.data.firstName,
@@ -249,7 +262,7 @@ export default {
             country: this.userID[0].country,
             address: this.userID[0].address,
             postcode: this.userID[0].postcode,
-            education: this.userID[0].education,
+            education: this.education,
           },
         }
       );
@@ -273,6 +286,12 @@ export default {
           String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
         )   */
       this.image = response.data.img.data
+      this.educationCount--
+    },
+    async removeEducation(id) {
+      const index = this.education.indexOf(id)
+      this.education.splice(index, 1)
+      this.educationCount--
     }
   },
 };
@@ -316,6 +335,42 @@ input:disabled {
   border-color: #84e3c1;
 }
 
+.form-education {
+  margin-top: 10px;
+}
+
+.form-education:hover {
+  border-color: #84e3c1;
+}
+
+.form-add {
+  padding: 5px;
+  background-color:#089965;
+  color: white;
+  border: 1px solid white;
+  transition: 0.2s;
+}
+
+.form-add:hover {
+  background-color: white;
+  color: #089965;
+  border: 1px solid #089965;
+}
+
+.form-remove {
+  margin-top: 10px;
+  padding: 5px;
+  background-color:#ce1616;
+  color: white;
+  border: 1px solid white;
+  transition: 0.2s;
+}
+
+.form-remove:hover {
+  background-color: white;
+  color: #ce1616;
+  border: 1px solid #ce1616;
+}
 
 .back:hover {
   color: #25d294;
@@ -377,4 +432,5 @@ input:disabled {
 .col-md-12 {
   padding: 6px !important;
 }
+
 </style>

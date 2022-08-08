@@ -57,9 +57,9 @@
                 <label class="labels">Email</label>
                 <p>{{ data.email }}</p>
               </div>
-              <div class="col-md-12">
+              <div class="col-md-12" >
                 <label class="labels">Education</label>
-                <p>{{ data.education }}</p>
+                <p v-for="(edu, i) in data.education" :key="i">{{ data.education[i] }}</p>
               </div>
             </div>
             <div class="row mt-3">

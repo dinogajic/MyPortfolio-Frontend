@@ -1,7 +1,7 @@
 <template>
   <div class="text-center">
     <v-dialog
-      v-model="dialog"
+      v-model="compDialog"
       width="500"
     >
       <v-card>
@@ -18,7 +18,7 @@
           <v-btn
             color="primary"
             text
-            @click="dialog = false; pushRouter()"
+            @click="compDialog = false; pushRouter()"
           >
             ACCEPT
           </v-btn>
@@ -34,13 +34,19 @@ export default {
   name: "Dialog",
   data() {
     return {
-      
+      compDialog: this.dialog
     };
   },
   methods: {
     pushRouter() {
         this.$router.push({ name: "Portfolio" })
     }
+  },
+  watch: {
+    alertResponseData() {
+      this.compDialog = true
+    }
+
   }
 };
 </script>
