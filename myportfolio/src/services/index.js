@@ -8,6 +8,8 @@ let Service = axios.create({
     
 })
 
+let errorMsg = "";
+
 axios.interceptors.request.use((request) => {
     try {
         request.headers['Authorization'] = 'Bearer ' + Auth.getToken();
@@ -31,7 +33,7 @@ let Auth = {
         let response = await Service.post("/auth", {
             email: email,
             password: password,
-        });
+        })
 
         if(response.data.status == "Auth error" && response.data.status == 401) {
             return false
@@ -70,4 +72,4 @@ let Auth = {
     }
 }
 
-export { Auth };
+export { Auth, errorMsg };

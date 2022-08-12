@@ -4,7 +4,7 @@
     <div name="template1" class="col-sm-12">
       <v-card class="mx-auto" max-width="500"
         >
-        <v-system-bar lights-out></v-system-bar>
+       
         <v-carousel
           :continuous="false"
           :cycle="cycle"
@@ -16,7 +16,10 @@
             <v-sheet height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
                 <div class="text-h2">
-                  <img :src="imageRef + image.data">
+                  <v-img :src="imageRef + image.data" 
+                  max-height="400"
+                  max-width="500" 
+                  contain/>
                 </div>
               </v-row>
             </v-sheet>
@@ -24,15 +27,13 @@
         </v-carousel>
 
         <v-card-title
-          ><a href="">{{ userPortfolio.projectTitle }}</a></v-card-title
+          >{{ userPortfolio.designPortfolioTitle }}</v-card-title
         >
-
-        <v-card-subtitle>{{ userPortfolio.projectSubtitle }}</v-card-subtitle>
         <v-card-subtitle>{{ "template:" + userPortfolio.template }}</v-card-subtitle>
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
-              <v-img src="@/assets/dummy.png"></v-img>
+              <v-img :src="imageRef + userImage"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title v-for="(user, i) in userData" :key="i">{{ user.firstName + " " + user.lastName }}</v-list-item-title>
@@ -54,10 +55,10 @@
           <div v-show="show">
             <v-divider></v-divider>
             <v-card-text>
-              {{ userPortfolio.projectDescription }}
+              {{ userPortfolio.designPortfolioDescription }}
             </v-card-text>
             <v-card-text>
-              <a href="">{{ userPortfolio.projectLinks }}</a>
+              <a href="">{{ userPortfolio.designPortfolioLinks }}</a>
             </v-card-text>
           </div>
         </v-expand-transition>
@@ -97,16 +98,7 @@
               >
                 <v-text-field
                   label="Project title"
-                  v-model="userPortfolio.projectTitle"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-              > 
-                <v-text-field
-                  label="Project subtitle"
-                  v-model="userPortfolio.projectSubtitle"
+                  v-model="userPortfolio.designPortfolioTitle"
                   required
                 ></v-text-field>
               </v-col>
@@ -115,7 +107,7 @@
               >
                 <v-textarea
                   label="Project description"
-                  v-model="userPortfolio.projectDescription"
+                  v-model="userPortfolio.designPortfolioDescription"
                   required
                 ></v-textarea>
               </v-col>
@@ -124,7 +116,7 @@
               >
                 <v-text-field
                   label="Project links"
-                  v-model="userPortfolio.projectLinks"
+                  v-model="userPortfolio.designPortfolioLinks"
                   required
                 ></v-text-field>
               </v-col>
@@ -169,7 +161,6 @@
     <div name="template1" class="col-sm-12">
       <v-card class="mx-auto" max-width="500"
         >
-        <v-system-bar lights-out></v-system-bar>
         <v-carousel
           :continuous="false"
           :cycle="cycle"
@@ -181,7 +172,10 @@
             <v-sheet height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
                 <div class="text-h2">
-                  <img :src="imageRef + image.data">
+                  <v-img :src="imageRef + image.data" 
+                  max-height="400"
+                  max-width="500" 
+                  contain/>
                 </div>
               </v-row>
             </v-sheet>
@@ -189,15 +183,13 @@
         </v-carousel>
 
         <v-card-title
-          ><a href="">{{ userPortfolio.projectTitle }}</a></v-card-title
+          >{{ userPortfolio.softwarePortfolioTitle }}</v-card-title
         >
-
-        <v-card-subtitle>{{ userPortfolio.projectSubtitle }}</v-card-subtitle>
         <v-card-subtitle>{{ "template:" + userPortfolio.template }}</v-card-subtitle>
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
-              <v-img src="@/assets/dummy.png"></v-img>
+              <v-img :src="imageRef + userImage"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title v-for="(user, i) in userData" :key="i">{{ user.firstName + " " + user.lastName }}</v-list-item-title>
@@ -219,10 +211,10 @@
           <div v-show="show">
             <v-divider></v-divider>
             <v-card-text>
-              {{ userPortfolio.projectDescription }}
+              {{ userPortfolio.softwarePortfolioDescription }}
             </v-card-text>
             <v-card-text>
-              <a href="">{{ userPortfolio.projectLinks }}</a>
+              <a href="">{{ userPortfolio.softwarePortfolioLinks }}</a>
             </v-card-text>
           </div>
         </v-expand-transition>
@@ -262,16 +254,7 @@
               >
                 <v-text-field
                   label="Project title"
-                  v-model="userPortfolio.projectTitle"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-              >
-                <v-text-field
-                  label="Project subtitle"
-                  v-model="userPortfolio.projectSubtitle"
+                  v-model="userPortfolio.softwarePortfolioTitle"
                   required
                 ></v-text-field>
               </v-col>
@@ -280,7 +263,7 @@
               >
                 <v-textarea
                   label="Project description"
-                  v-model="userPortfolio.projectDescription"
+                  v-model="userPortfolio.softwarePortfolioDescription"
                   required
                 ></v-textarea>
               </v-col>
@@ -289,7 +272,7 @@
               >
                 <v-text-field
                   label="Project links"
-                  v-model="userPortfolio.projectLinks"
+                  v-model="userPortfolio.softwarePortfolioLinks"
                   required
                 ></v-text-field>
               </v-col>
@@ -334,7 +317,6 @@
     <div name="template1" class="col-sm-12">
       <v-card class="mx-auto" max-width="500"
         >
-        <v-system-bar lights-out></v-system-bar>
         <v-carousel
           :continuous="false"
           :cycle="cycle"
@@ -346,7 +328,10 @@
             <v-sheet height="100%" tile>
               <v-row class="fill-height" align="center" justify="center">
                 <div class="text-h2">
-                  <img :src="imageRef + image.data">
+                  <v-img :src="imageRef + image.data" 
+                  max-height="400"
+                  max-width="500" 
+                  contain/>
                 </div>
               </v-row>
             </v-sheet>
@@ -354,15 +339,13 @@
         </v-carousel>
 
         <v-card-title
-          ><a href="">{{ userPortfolio.projectTitle }}</a></v-card-title
+          >{{ userPortfolio.photoGalleryTitle }}</v-card-title
         >
-
-        <v-card-subtitle>{{ userPortfolio.projectSubtitle }}</v-card-subtitle>
         <v-card-subtitle>{{ "template:" + userPortfolio.template }}</v-card-subtitle>
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
-              <v-img src="@/assets/dummy.png"></v-img>
+              <v-img :src="imageRef + userImage"></v-img>
             </v-list-item-avatar>
             <v-list-item-content>
               <v-list-item-title v-for="(user, i) in userData" :key="i">{{ user.firstName + " " + user.lastName }}</v-list-item-title>
@@ -384,10 +367,7 @@
           <div v-show="show">
             <v-divider></v-divider>
             <v-card-text>
-              {{ userPortfolio.projectDescription }}
-            </v-card-text>
-            <v-card-text>
-              <a href="">{{ userPortfolio.projectLinks }}</a>
+              {{ userPortfolio.photoGalleryDescription }}
             </v-card-text>
           </div>
         </v-expand-transition>
@@ -427,16 +407,7 @@
               >
                 <v-text-field
                   label="Project title"
-                  v-model="userPortfolio.projectTitle"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col
-                cols="12"
-              >
-                <v-text-field
-                  label="Project subtitle"
-                  v-model="userPortfolio.projectSubtitle"
+                  v-model="userPortfolio.photoGalleryTitle"
                   required
                 ></v-text-field>
               </v-col>
@@ -445,18 +416,9 @@
               >
                 <v-textarea
                   label="Project description"
-                  v-model="userPortfolio.projectDescription"
+                  v-model="userPortfolio.photoGalleryDescription"
                   required
                 ></v-textarea>
-              </v-col>
-              <v-col
-                cols="12"
-              >
-                <v-text-field
-                  label="Project links"
-                  v-model="userPortfolio.projectLinks"
-                  required
-                ></v-text-field>
               </v-col>
               <v-col
                 cols="12"
@@ -501,7 +463,7 @@
 import axios from "axios"
 
 export default {
-  props: ["userPortfolio", "userData"],
+  props: ["userPortfolio", "userData", "userImage"],
   name: "PortfolioComponent",
   data() {
     return {
@@ -540,9 +502,6 @@ export default {
 </script>
 
 <style scoped>
-.card img {
-  height: auto;
-  max-height: 300px;
-}
+
 
 </style>

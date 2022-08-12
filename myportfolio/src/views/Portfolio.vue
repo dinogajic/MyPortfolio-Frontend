@@ -13,6 +13,7 @@
             :key="userPortfolio.id"
             :userPortfolio="userPortfolio"
             :userData="userData"
+            :userImage="userImage"
           />
         </div>
       </div>
@@ -31,11 +32,13 @@ export default {
     return {
       userPortfolios: [],
       userData: [],
+      userImage: "",
     };
   },
   mounted() {
     this.getUserPortfolio();
     this.getUserData();
+    this.getUserImage();
   },
   methods: {
     async getUserPortfolio() {
@@ -43,16 +46,38 @@ export default {
         "https://my-portfolio-wa.herokuapp.com/portfolio"
       );
       await response.data.forEach((portfolio) => {
-        this.userPortfolios.push({
+        if(portfolio.template == 1) {
+          this.userPortfolios.push({
           _id: portfolio._id,
-          projectTitle: portfolio.projectTitle,
-          projectSubtitle: portfolio.projectSubtitle,
-          projectDescription: portfolio.projectDescription,
-          projectLinks: portfolio.projectLinks,
+          designPortfolioTitle: portfolio.designPortfolioTitle,
+          designPortfolioDescription: portfolio.designPortfolioDescription,
+          designPortfolioLinks: portfolio.designPortfolioLinks,
           userEmail: portfolio.userEmail,
           template: portfolio.template,
           imagesArray: portfolio.imagesArray
         })  
+        }
+        if(portfolio.template == 2) {
+          this.userPortfolios.push({
+          _id: portfolio._id,
+          softwarePortfolioTitle: portfolio.softwarePortfolioTitle,
+          softwarePortfolioDescription: portfolio.softwarePortfolioDescription,
+          softwarePortfolioLinks: portfolio.softwarePortfolioLinks,
+          userEmail: portfolio.userEmail,
+          template: portfolio.template,
+          imagesArray: portfolio.imagesArray
+        })  
+        }
+        if(portfolio.template == 3) {
+          this.userPortfolios.push({
+          _id: portfolio._id,
+          photoGalleryTitle: portfolio.photoGalleryTitle,
+          photoGalleryDescription: portfolio.photoGalleryDescription,
+          userEmail: portfolio.userEmail,
+          template: portfolio.template,
+          imagesArray: portfolio.imagesArray
+        })  
+        }
       });
     },
     async getUserData() {
@@ -71,6 +96,10 @@ export default {
         education: response.data.userData.education,
       });
     },
+    async getUserImage() {
+      const response = await axios("https://my-portfolio-wa.herokuapp.com/profile_image")
+      this.userImage = response.data.img.data
+    }
     
   },
   components: { PortfolioComponent },

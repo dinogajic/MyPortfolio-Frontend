@@ -26,26 +26,15 @@
               <h4 class="text-right">Design portfolio</h4>
             </div>
             <div class="row mt-2">
-              <div class="col-md-6">
+              <div class="col-md-12">
                 <label class="labels">Project title</label
                 ><input
                   required
-                  v-model="projectTitle"
+                  v-model="designPortfolio.title"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Title..."
                   value=""
-                />
-              </div>
-              <div class="col-md-6">
-                <label class="labels">Subtitle</label
-                ><input
-                  required
-                  v-model="projectSubtitle"
-                  type="text"
-                  class="form-control shadow-none"
-                  value=""
-                  placeholder="Subtitle..."
                 />
               </div>
             </div>
@@ -54,7 +43,7 @@
                 <label class="labels">Project description</label
                 ><textarea
                   required
-                  v-model="projectDescription"
+                  v-model="designPortfolio.description"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Description..."
@@ -64,7 +53,7 @@
               <div class="col-md-12">
                 <label class="labels">Additional links</label
                 ><textarea
-                  v-model="projectLinks"
+                  v-model="designPortfolio.links"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Links..."
@@ -73,16 +62,16 @@
               </div>
               <div class="col-md-12">
                 <v-file-input
-                  v-model="files"
+                  v-model="designPortfolio.files"
                   name="image"
                   accept="image/png"
                   label="Choose images" 
                   multiple
-                  @change="loading=false"            
+                  @change="loadingOne=false"            
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
+                <button @click="createProject" class="rl-cp w-100" :disabled="loadingOne">Create Portfolio</button>
               </div>
             </div>
           </div>
@@ -94,35 +83,24 @@
               <h4 class="text-right">Software portfolio</h4>
             </div>
             <div class="row mt-2">
-              <div class="col-md-6">
-                <label class="labels">Project title</label
+              <div class="col-md-12">
+                <label class="labels">Product name</label
                 ><input
                   required
-                  v-model="projectTitle"
+                  v-model="softwarePortfolio.title"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Title..."
                   value=""
                 />
               </div>
-              <div class="col-md-6">
-                <label class="labels">Subtitle</label
-                ><input
-                  required
-                  v-model="projectSubtitle"
-                  type="text"
-                  class="form-control shadow-none"
-                  value=""
-                  placeholder="Subtitle..."
-                />
-              </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
-                <label class="labels">Project description</label
+                <label class="labels">Product description</label
                 ><textarea
                   required
-                  v-model="projectDescription"
+                  v-model="softwarePortfolio.description"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Description..."
@@ -132,7 +110,7 @@
               <div class="col-md-12">
                 <label class="labels">Additional links</label
                 ><textarea
-                  v-model="projectLinks"
+                  v-model="softwarePortfolio.links"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Links..."
@@ -141,16 +119,16 @@
               </div>
               <div class="col-md-12">
                 <v-file-input
-                  v-model="files"
+                  v-model="softwarePortfolio.files"
                   name="image"
                   accept="image/png"
                   label="Choose images" 
                   multiple
-                  @change="loading=false"            
+                  @change="loadingTwo=false"            
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
+                <button @click="createProject" class="rl-cp w-100" :disabled="loadingTwo">Create Portfolio</button>
               </div>
             </div>
           </div>
@@ -162,35 +140,24 @@
               <h4 class="text-right">Photo gallery</h4>
             </div>
             <div class="row mt-2">
-              <div class="col-md-6">
-                <label class="labels">Project title</label
+              <div class="col-md-12">
+                <label class="labels">Gallery Title</label
                 ><input
                   required
-                  v-model="projectTitle"
+                  v-model="photoGallery.title"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Title..."
                   value=""
                 />
               </div>
-              <div class="col-md-6">
-                <label class="labels">Subtitle</label
-                ><input
-                  required
-                  v-model="projectSubtitle"
-                  type="text"
-                  class="form-control shadow-none"
-                  value=""
-                  placeholder="Subtitle..."
-                />
-              </div>
             </div>
             <div class="row mt-3">
               <div class="col-md-12">
-                <label class="labels">Project description</label
+                <label class="labels">Gallery description</label
                 ><textarea
                   required
-                  v-model="projectDescription"
+                  v-model="photoGallery.description"
                   type="text"
                   class="form-control shadow-none"
                   placeholder="Description..."
@@ -198,27 +165,17 @@
                 />
               </div>
               <div class="col-md-12">
-                <label class="labels">Additional links</label
-                ><textarea
-                  v-model="projectLinks"
-                  type="text"
-                  class="form-control shadow-none"
-                  placeholder="Links..."
-                  rows="6"
-                />
-              </div>
-              <div class="col-md-12">
                 <v-file-input
-                  v-model="files"
+                  v-model="photoGallery.files"
                   name="image"
                   accept="image/png"
                   label="Choose images" 
                   multiple
-                  @change="loading=false"            
+                  @change="loadingThree=false"            
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject" class="rl-cp w-100">Create Portfolio</button>
+                <button @click="createProject" class="rl-cp w-100" :disabled="loadingThree">Create Portfolio</button>
               </div>
             </div>
           </div>
@@ -242,14 +199,30 @@ export default {
   name: "CreatePortfolio",
   data() {
     return {
+      loadingOne: true,
+      loadingTwo: true,
+      loadingThree: true,
       alertResponseData: "",
-      projectTitle: "",
-      projectSubtitle: "",
-      projectDescription: "",
-      projectLinks: "",
-      templateChoice: "1",
-      files: null,
       dialog: false,
+      templateChoice: "1",
+      designPortfolio: {
+        title: "",
+        description: "",
+        links: [],
+        files: null,
+      },
+      photoGallery: {
+        title: "",
+        description: "",
+        files: null,
+      },
+      softwarePortfolio: {
+        title: "",
+        description: "",
+        links: [],
+        files: null,
+      }
+      
     };
   },
   methods: {
@@ -258,14 +231,34 @@ export default {
     },
     async createProject() {
       const data = new FormData();
-      data.append("projectTitle", this.projectTitle)
-      data.append("projectSubtitle", this.projectSubtitle)
-      data.append("projectDescription", this.projectDescription)
-      data.append("projectLinks", this.projectLinks)
-      data.append("templateChoice", this.templateChoice)
-        this.files.forEach(file => {
-            data.append("images", file)
-        })
+      if(this.templateChoice == "1") {
+        data.append("designPortfolioTitle", this.designPortfolio.title)
+        data.append("designPortfolioDescription", this.designPortfolio.description)
+        data.append("designPortfolioLinks", this.designPortfolio.links)
+        data.append("templateChoice", this.templateChoice)
+          this.designPortfolio.files.forEach(file => {
+              data.append("images", file)
+          })
+      } 
+
+      else if(this.templateChoice == "2") {
+        data.append("softwarePortfolioTitle", this.softwarePortfolio.title)
+        data.append("softwarePortfolioDescription", this.softwarePortfolio.description)
+        data.append("softwarePortfolioLinks", this.softwarePortfolio.links)
+        data.append("templateChoice", this.templateChoice)
+          this.softwarePortfolio.files.forEach(file => {
+              data.append("images", file)
+          })
+      }
+
+      else if(this.templateChoice == "3") {
+        data.append("photoGalleryTitle", this.photoGallery.title)
+        data.append("photoGalleryDescription", this.photoGallery.description)
+        data.append("templateChoice", this.templateChoice)
+          this.photoGallery.files.forEach(file => {
+              data.append("images", file)
+          })
+      }
 
       const res = await axios.post(
         "https://my-portfolio-wa.herokuapp.com/portfolio", data)
@@ -280,25 +273,16 @@ export default {
       })
       
     },
-    /* async sendPortfolioImages() {
-       const data = new FormData();
-        data.append("name", Math.floor(Math.random() * 1000000000001))
-        data.append("portfolioName", this.projectTitle)
-        
-        this.files.forEach(file => {
-            data.append("images", file)
-        })
-        await axios.post("https://my-portfolio-wa.herokuapp.com/portfolio_images", data).then(response => {
-          console.log(response)
-        })
-      
-    } */
   },
   components: { Dialog },
 };
 </script>
 
 <style scoped>
+button:disabled {
+  opacity: 0.5;
+}
+
 option::selection {
   background-color: #25d294 !important;
 }

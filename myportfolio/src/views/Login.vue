@@ -41,31 +41,43 @@
         <button type="submit" class="btnLogin btn btn-primary">Log In</button>
       </div>
     </div>
-    <p class="error"></p>
+    <p v-if="errorMessage" class="error">{{errorMessage}}</p>
   </form>
 </template>
 <script>
 import { Auth } from "@/services";
-import axios from "axios";
-
+ 
 export default {
   data() {
     return {
       email: "",
       password: "",
+      errorMessage: "",
     };
   },
   methods: {
     async login() {
-      let success = await Auth.login(this.email, this.password);
-      console.log("Rezultat prijave", success);
+      
+      let success = await Auth.login(this.email, this.password).catch((error) => {
+        this.errorMessage = error.response.data.msg
+      });
 
       if (success == true) {
         this.$router.push({ name: "Home" });
       } else {
-        this.$router.go();
+      
       }
     },
   },
 };
 </script>
+<style scoped>
+.error {
+  color: red;
+  padding: 5px;
+  border: 1px solid red;
+  width: 200px;
+  margin: 10px auto auto auto;
+  text-align: center;
+}
+</style>
