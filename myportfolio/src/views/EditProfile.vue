@@ -279,7 +279,10 @@ export default {
         data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.file.name.toLowerCase())
         data.append("image", this.file)
         await axios.post("https://my-portfolio-wa.herokuapp.com/profile_image", data)
-        this.$router.push({ name: "Profile" })
+        .then((response) => {
+        this.alertResponseData = response.data.msg 
+        this.dialog = true
+      });
       } else {
         this.loading = true
         this.errorMessage = "Choose an image!"
