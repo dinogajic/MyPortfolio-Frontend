@@ -12,6 +12,7 @@
               class="dropdownBtn shadow-none form-select form-select-lg mb-3 "
               aria-label=".form-select-lg example"
               v-model="templateChoice"
+              @change="resetValues()"
             >
               <option class="dropdown-item" value="1">One</option>
               <option class="dropdown-item" value="2">Two</option>
@@ -108,14 +109,17 @@
                 />
               </div>
               <div class="col-md-12">
-                <label class="labels">Additional links</label
-                ><textarea
-                  v-model="softwarePortfolio.links"
-                  type="text"
-                  class="form-control shadow-none"
-                  placeholder="Links..."
-                  rows="6"
-                />
+                <label class="labels mb-2">GitHub Link</label
+                >
+                <div class="row">
+                  <div class="col-md-2">
+                    <input type="text" class="form-control shadow-none" value="GitHub" id="github" disabled>
+                  </div>
+                  <div class="col-md-10">
+                    <input type="text" :class="`form-control shadow-none ${error_input}`" v-model="softwarePortfolio.github_link" @change="checkLinkGithub()">
+                    <p v-if="error_input" class="error-message">Link has to be: <i><b>www.github.com/project_path</b></i></p>
+                  </div>
+                </div>
               </div>
               <div class="col-md-12">
                 <v-file-input
@@ -205,6 +209,7 @@ export default {
       alertResponseData: "",
       dialog: false,
       templateChoice: "1",
+      error_input: "",
       designPortfolio: {
         title: "",
         description: "",
@@ -219,7 +224,7 @@ export default {
       softwarePortfolio: {
         title: "",
         description: "",
-        links: [],
+        github_link: "",
         files: null,
       }
       
@@ -228,6 +233,35 @@ export default {
   methods: {
     templateDropdown() {
       $(".dropdown-toggle").dropdown();
+    },
+    async checkLinkGithub() {
+      if(this.softwarePortfolio.github_link == "" || this.softwarePortfolio.github_link.includes("www.github.com/")) {
+        this.error_input = ""
+      } else { 
+        this.error_input = "error-input"
+      }
+
+
+    },
+    async resetValues() {
+      this.error_input = ""
+      this.designPortfolio = {
+        title: "",
+        description: "",
+        links: [],
+        files: null,
+      },
+      this.photoGallery = {
+        title: "",
+        description: "",
+        files: null,
+      },
+      this.softwarePortfolio = {
+        title: "",
+        description: "",
+        github_link: "",
+        files: null,
+      }
     },
     async createProject() {
       const data = new FormData();
@@ -244,7 +278,7 @@ export default {
       else if(this.templateChoice == "2") {
         data.append("softwarePortfolioTitle", this.softwarePortfolio.title)
         data.append("softwarePortfolioDescription", this.softwarePortfolio.description)
-        data.append("softwarePortfolioLinks", this.softwarePortfolio.links)
+        data.append("softwarePortfolioLinks", this.softwarePortfolio.github_link)
         data.append("templateChoice", this.templateChoice)
           this.softwarePortfolio.files.forEach(file => {
               data.append("images", file)
@@ -260,18 +294,19 @@ export default {
           })
       }
 
-      const res = await axios.post(
+      if(!this.error_input) {
+        const res = await axios.post(
         "https://my-portfolio-wa.herokuapp.com/portfolio", data)
-        .then((response) => {
-        if(response) {
-          this.alertResponseData = response.data
-          this.dialog = true;
-          
-        } else {
-          alert ("Failed to create portfolio")
-        }
-      })
-      
+          .then((response) => {
+          if(response) {
+            this.alertResponseData = response.data.msg
+            this.dialog = true;     
+          }
+        })
+      } else {
+        this.alertResponseData = "A field is not valid.\nReturning you to the portfolio page."
+        this.dialog = true;
+      }
     },
   },
   components: { Dialog },
@@ -281,6 +316,11 @@ export default {
 <style scoped>
 button:disabled {
   opacity: 0.5;
+}
+
+input#github:disabled {
+  background-color: #24292f;
+  color: rgb(241, 240, 240);
 }
 
 option::selection {
@@ -293,6 +333,23 @@ input:focus {
 
 textarea:focus {
   border-color: #84e3c1;
+}
+
+.error-input {
+  border-color: red !important;
+}
+
+.error-message {
+  font-size: 13px;
+  color: red;
+}
+
+.github {
+  background-color: #089965;
+}
+
+.labels {
+  font-size: 13px;
 }
 
 .dropdownBtn {

@@ -39,7 +39,30 @@ export default {
   },
   methods: {
     pushRouter() {
-        this.$router.push({ name: "Portfolio" })
+        if(this.alertResponseData.includes("User already exists.")) {
+          this.$router.go()
+        }
+        else if(this.alertResponseData.includes("Profile successfully created.")) {
+          this.$router.push({ name: "Login"})
+        }
+        else if(this.alertResponseData.includes("Form contains invalid values.")) {
+          this.$router.go()
+        }
+        else if(this.alertResponseData.includes("User information has successfully updated.")) {
+          this.$router.push({name: "Profile"})
+        }
+        else if(this.alertResponseData.includes("Update error")) {
+          this.$router.go()
+        }
+        else if(this.alertResponseData.includes("Profile picture successfully updated.")) {
+          this.$router.go()
+        }
+        else if(this.alertResponseData.includes("portfolio created successfully.")) {
+          this.$router.push({name: "Portfolio"})
+        }
+        else if(this.alertResponseData.includes("Failed to create a portfolio.")) {
+          this.$router.go()
+        }
     }
   },
   watch: {

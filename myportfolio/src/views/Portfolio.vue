@@ -129,7 +129,7 @@ export default {
 }
 
 .row > * {
-  width: 50% !important;
+  width: 33.3% !important;
 }
 
 @media (max-width: 992px) {

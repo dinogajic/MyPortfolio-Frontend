@@ -1,5 +1,6 @@
 <template>
 <v-app>
+  <Dialog :alertResponseData="alertResponseData" :dialog="dialog"/>
   <div class="profile py-10" v-for="data in userID"
           :key="data.id">
       <div class="row">
@@ -202,6 +203,7 @@
 
 <script>
 import axios from "axios";
+import Dialog from "@/components/Dialog.vue"
 
 export default {
   name: "Profile",
@@ -222,12 +224,13 @@ export default {
       image: null,
       errorMessage: "",
       loading: false,
+      dialog: false,
+      alertResponseData: "",
     };
   },
   mounted() {
     this.getUserData();
     this.getImage();
-    console.log(this.$refs.education)
   },
   methods: {
     async getUserData() {
@@ -265,8 +268,10 @@ export default {
             education: this.education,
           },
         }
-      );
-      this.$router.push({ name: "Profile" });
+      ).then((response) => {
+        this.alertResponseData = response.data.msg 
+        this.dialog = true
+      });
     },
     async updateProfileImage() {
       const data = new FormData();
@@ -294,6 +299,9 @@ export default {
       this.educationCount--
     }
   },
+  components: {
+    Dialog
+  }
 };
 
 

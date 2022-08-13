@@ -132,7 +132,7 @@ export default {
     };
   },
   mounted() {
-    this.getUserData();
+    this.getUserData()
     this.getImage();
     /* this.setPicture(); */
     

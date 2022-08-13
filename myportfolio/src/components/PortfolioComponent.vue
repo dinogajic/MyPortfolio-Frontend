@@ -29,7 +29,6 @@
         <v-card-title
           >{{ userPortfolio.designPortfolioTitle }}</v-card-title
         >
-        <v-card-subtitle>{{ "template:" + userPortfolio.template }}</v-card-subtitle>
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
@@ -58,7 +57,7 @@
               {{ userPortfolio.designPortfolioDescription }}
             </v-card-text>
             <v-card-text>
-              <a href="">{{ userPortfolio.designPortfolioLinks }}</a>
+              {{ userPortfolio.designPortfolioLinks }}
             </v-card-text>
           </div>
         </v-expand-transition>
@@ -185,7 +184,6 @@
         <v-card-title
           >{{ userPortfolio.softwarePortfolioTitle }}</v-card-title
         >
-        <v-card-subtitle>{{ "template:" + userPortfolio.template }}</v-card-subtitle>
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
@@ -214,7 +212,7 @@
               {{ userPortfolio.softwarePortfolioDescription }}
             </v-card-text>
             <v-card-text>
-              <a href="">{{ userPortfolio.softwarePortfolioLinks }}</a>
+              <a @click="openLink()"><i class="fa-brands fa-github fa-2xl"></i></a>
             </v-card-text>
           </div>
         </v-expand-transition>
@@ -341,7 +339,6 @@
         <v-card-title
           >{{ userPortfolio.photoGalleryTitle }}</v-card-title
         >
-        <v-card-subtitle>{{ "template:" + userPortfolio.template }}</v-card-subtitle>
         <v-list two-line>
           <v-list-item>
             <v-list-item-avatar>
@@ -479,6 +476,9 @@ export default {
 
   },
   methods: {
+    async openLink(){
+      window.open("https://" + this.userPortfolio.softwarePortfolioLinks);
+    },
     async editPortfolio(id) {
         const data = new FormData();
           data.append("projectTitle", this.userPortfolio.projectTitle)
@@ -494,7 +494,9 @@ export default {
         this.$router.go()
     },
     async deletePortfolio(id) {
-        await axios.delete("https://my-portfolio-wa.herokuapp.com/portfolio/" + id)
+        await axios.delete("https://my-portfolio-wa.herokuapp.com/portfolio/" + id).then((response) => {
+          
+        })
         this.$router.go()
     },
   },
@@ -503,5 +505,13 @@ export default {
 
 <style scoped>
 
+a i {
+  color: #089965;
+  transition: 0.2s;
+}
+
+a i:hover {
+  opacity: 0.6;
+}
 
 </style>

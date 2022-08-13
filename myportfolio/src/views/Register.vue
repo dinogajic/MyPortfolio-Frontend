@@ -1,5 +1,7 @@
 <template>
-  <form @submit.prevent="registerUser" class="form-register">
+<v-app>
+  <div>
+    <form @submit.prevent="registerUser" @keydown.space.prevent class="form-register">
     <div class="form">
       <div class="form-group">
         <label for="inputName">Name</label>
@@ -76,10 +78,16 @@
       </div>
     </div>
     <p class="error"></p>
+    
   </form>
+  <Dialog :alertResponseData="alertResponseData" :dialog="dialog"/>
+  </div>
+  </v-app>
 </template>
 <script>
 import axios from "axios";
+import Dialog from "@/components/Dialog.vue";
+
 
 export default {
   data() {
@@ -89,6 +97,8 @@ export default {
       email: "",
       password: "",
       repeatPassword: "",
+      alertResponseData: "",
+      dialog: false,
     };
   },
   methods: {
@@ -108,8 +118,15 @@ export default {
             education: null,
           },
         }
-      );
+      ).then((response) => {
+        this.alertResponseData = response.data.msg
+        this.dialog = true
+      })
+      
     },
   },
+  components: {
+    Dialog
+  }
 };
 </script>
