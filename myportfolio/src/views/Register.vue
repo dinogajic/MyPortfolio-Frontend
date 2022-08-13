@@ -115,7 +115,7 @@ export default {
             mobile_number: null,
             address: null,
             postcode: null,
-            education: null,
+            education: [],
           },
         }
       ).then((response) => {
