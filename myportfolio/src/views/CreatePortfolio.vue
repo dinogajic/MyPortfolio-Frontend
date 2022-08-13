@@ -117,7 +117,7 @@
                   </div>
                   <div class="col-md-10">
                     <input type="text" :class="`form-control shadow-none ${error_input}`" v-model="softwarePortfolio.github_link" @change="checkLinkGithub()">
-                    <p v-if="error_input" class="error-message">Link has to be: <i><b>www.github.com/project_path</b></i></p>
+                    <p v-if="error_input" class="error-message">Link has to be: <i><b>https://github.com/project_path</b></i></p>
                   </div>
                 </div>
               </div>
@@ -235,7 +235,7 @@ export default {
       $(".dropdown-toggle").dropdown();
     },
     async checkLinkGithub() {
-      if(this.softwarePortfolio.github_link == "" || this.softwarePortfolio.github_link.includes("www.github.com/")) {
+      if(this.softwarePortfolio.github_link == "" || this.softwarePortfolio.github_link.includes("https://github.com/")) {
         this.error_input = ""
       } else { 
         this.error_input = "error-input"
