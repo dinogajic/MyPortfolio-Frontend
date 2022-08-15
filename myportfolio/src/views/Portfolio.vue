@@ -1,30 +1,45 @@
 <template>
   <v-app>
-    <div class="portfolio">
-      <div class="btn-container">
-        <router-link to="/create-portfolio"
-          ><button class="rl-cp">CREATE PORTFOLIO</button></router-link
-        > 
-      </div>
-      <div class="container">
-        <div class="row">
-          <portfolio-component
-            v-for="userPortfolio in userPortfolios"
-            :key="userPortfolio.id"
-            :userPortfolio="userPortfolio"
-            :userData="userData"
-            :userImage="userImage"
-          />
-        </div>
-      </div>
-    
+    <div class="btn-container">
+      <router-link to="/create-portfolio"
+        ><button class="rl-cp">CREATE PORTFOLIO</button></router-link
+      >
     </div>
+    <div class="component-container">
+      <design-portfolio-component
+        style="margin-top: 30px"
+        v-for="userPortfolio in userPortfolios"
+        :key="userPortfolio.id"
+        :userPortfolio="userPortfolio"
+        :userData="userData"
+        :userImage="userImage"
+      />
+      <software-portfolio-component
+        style="margin-top: 30px"
+        v-for="userPortfolio in userPortfolios"
+        :key="userPortfolio.id"
+        :userPortfolio="userPortfolio"
+        :userData="userData"
+        :userImage="userImage"
+      />
+      <photo-gallery-component
+        style="margin-top: 30px"
+        v-for="userPortfolio in userPortfolios"
+        :key="userPortfolio.id"
+        :userPortfolio="userPortfolio"
+        :userData="userData"
+        :userImage="userImage"
+      />
+    </div>
+    <div style="margin-top: 50px"></div>
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
-import PortfolioComponent from "@/components/PortfolioComponent.vue";
+import DesignPortfolioComponent from "@/components/DesignPortfolioComponent.vue";
+import SoftwarePortfolioComponent from "@/components/SoftwarePortfolioComponent.vue";
+import PhotoGalleryComponent from "@/components/PhotoGalleryComponent.vue";
 
 export default {
   name: "Portfolio",
@@ -46,37 +61,38 @@ export default {
         "https://my-portfolio-wa.herokuapp.com/portfolio"
       );
       await response.data.forEach((portfolio) => {
-        if(portfolio.template == 1) {
+        if (portfolio.template == 1) {
           this.userPortfolios.push({
-          _id: portfolio._id,
-          designPortfolioTitle: portfolio.designPortfolioTitle,
-          designPortfolioDescription: portfolio.designPortfolioDescription,
-          designPortfolioLinks: portfolio.designPortfolioLinks,
-          userEmail: portfolio.userEmail,
-          template: portfolio.template,
-          imagesArray: portfolio.imagesArray
-        })  
+            _id: portfolio._id,
+            designPortfolioTitle: portfolio.designPortfolioTitle,
+            designPortfolioDescription: portfolio.designPortfolioDescription,
+            designPortfolioLinks: portfolio.designPortfolioLinks,
+            userEmail: portfolio.userEmail,
+            template: portfolio.template,
+            imagesArray: portfolio.imagesArray,
+          });
         }
-        if(portfolio.template == 2) {
+        if (portfolio.template == 2) {
           this.userPortfolios.push({
-          _id: portfolio._id,
-          softwarePortfolioTitle: portfolio.softwarePortfolioTitle,
-          softwarePortfolioDescription: portfolio.softwarePortfolioDescription,
-          softwarePortfolioLinks: portfolio.softwarePortfolioLinks,
-          userEmail: portfolio.userEmail,
-          template: portfolio.template,
-          imagesArray: portfolio.imagesArray
-        })  
+            _id: portfolio._id,
+            softwarePortfolioTitle: portfolio.softwarePortfolioTitle,
+            softwarePortfolioDescription:
+              portfolio.softwarePortfolioDescription,
+            softwarePortfolioLinks: portfolio.softwarePortfolioLinks,
+            userEmail: portfolio.userEmail,
+            template: portfolio.template,
+            imagesArray: portfolio.imagesArray,
+          });
         }
-        if(portfolio.template == 3) {
+        if (portfolio.template == 3) {
           this.userPortfolios.push({
-          _id: portfolio._id,
-          photoGalleryTitle: portfolio.photoGalleryTitle,
-          photoGalleryDescription: portfolio.photoGalleryDescription,
-          userEmail: portfolio.userEmail,
-          template: portfolio.template,
-          imagesArray: portfolio.imagesArray
-        })  
+            _id: portfolio._id,
+            photoGalleryTitle: portfolio.photoGalleryTitle,
+            photoGalleryDescription: portfolio.photoGalleryDescription,
+            userEmail: portfolio.userEmail,
+            template: portfolio.template,
+            imagesArray: portfolio.imagesArray,
+          });
         }
       });
     },
@@ -97,16 +113,30 @@ export default {
       });
     },
     async getUserImage() {
-      const response = await axios("https://my-portfolio-wa.herokuapp.com/profile_image")
-      this.userImage = response.data.img.data
-    }
-    
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/profile_image"
+      );
+      this.userImage = response.data.img.data;
+    },
   },
-  components: { PortfolioComponent },
+  components: {
+    DesignPortfolioComponent,
+    SoftwarePortfolioComponent,
+    PhotoGalleryComponent,
+  },
 };
 </script>
 
 <style scoped>
+.component-container {
+  margin: auto;
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
 .btn-container {
   width: 30%;
   margin: 20px auto 20px auto;
@@ -126,21 +156,5 @@ export default {
   color: #089965 !important;
   background-color: white;
   transition: 0.2s;
-}
-
-.row > * {
-  width: 33.3% !important;
-}
-
-@media (max-width: 992px) {
-  .row > * {
-    width: 100% !important;
-  }
-}
-
-@media (max-width: 1080px) {
-  .row > * {
-    width: 50% !important;
-  }
 }
 </style>

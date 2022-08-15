@@ -1,15 +1,13 @@
 <template>
- <v-app>
-  <div class="profile">
-      <Dialog :alertResponseData="alertResponseData" :dialog="dialog"/>
+  <v-app>
+    <div class="profile">
+      <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
       <div class="row">
         <div class="col-md-3 border-right p-3 py-5">
           <div class="col-md-12">
-            <div>
-              Select template:
-            </div>
+            <div>Select template:</div>
             <select
-              class="dropdownBtn shadow-none form-select form-select-lg mb-3 "
+              class="dropdownBtn shadow-none form-select form-select-lg mb-3"
               aria-label=".form-select-lg example"
               v-model="templateChoice"
               @change="resetValues()"
@@ -66,13 +64,19 @@
                   v-model="designPortfolio.files"
                   name="image"
                   accept="image/png"
-                  label="Choose images" 
+                  label="Choose images"
                   multiple
-                  @change="loadingOne=false"            
+                  @change="loadingOne = false"
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject" class="rl-cp w-100" :disabled="loadingOne">Create Portfolio</button>
+                <button
+                  @click="createProject"
+                  class="rl-cp w-100"
+                  :disabled="loadingOne"
+                >
+                  Create Portfolio
+                </button>
               </div>
             </div>
           </div>
@@ -109,15 +113,28 @@
                 />
               </div>
               <div class="col-md-12">
-                <label class="labels mb-2">GitHub Link</label
-                >
+                <label class="labels mb-2">GitHub Link</label>
                 <div class="row">
                   <div class="col-md-2">
-                    <input type="text" class="form-control shadow-none" value="GitHub" id="github" disabled>
+                    <input
+                      type="text"
+                      class="form-control shadow-none"
+                      value="GitHub"
+                      id="github"
+                      disabled
+                    />
                   </div>
                   <div class="col-md-10">
-                    <input type="text" :class="`form-control shadow-none ${error_input}`" v-model="softwarePortfolio.github_link" @change="checkLinkGithub()">
-                    <p v-if="error_input" class="error-message">Link has to be: <i><b>https://github.com/project_path</b></i></p>
+                    <input
+                      type="text"
+                      :class="`form-control shadow-none ${error_input}`"
+                      v-model="softwarePortfolio.github_link"
+                      @change="checkLinkGithub()"
+                    />
+                    <p v-if="error_input" class="error-message">
+                      Link has to be:
+                      <i><b>https://github.com/project_path</b></i>
+                    </p>
                   </div>
                 </div>
               </div>
@@ -126,13 +143,19 @@
                   v-model="softwarePortfolio.files"
                   name="image"
                   accept="image/png"
-                  label="Choose images" 
+                  label="Choose images"
                   multiple
-                  @change="loadingTwo=false"            
+                  @change="loadingTwo = false"
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject" class="rl-cp w-100" :disabled="loadingTwo">Create Portfolio</button>
+                <button
+                  @click="createProject"
+                  class="rl-cp w-100"
+                  :disabled="loadingTwo"
+                >
+                  Create Portfolio
+                </button>
               </div>
             </div>
           </div>
@@ -173,26 +196,32 @@
                   v-model="photoGallery.files"
                   name="image"
                   accept="image/png"
-                  label="Choose images" 
+                  label="Choose images"
                   multiple
-                  @change="loadingThree=false"            
+                  @change="loadingThree = false"
                 />
               </div>
               <div class="col-md-12">
-                <button @click="createProject" class="rl-cp w-100" :disabled="loadingThree">Create Portfolio</button>
+                <button
+                  @click="createProject"
+                  class="rl-cp w-100"
+                  :disabled="loadingThree"
+                >
+                  Create Portfolio
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    <div class="row">
-      <div class="col-md-3"></div>
-      <div class="col-md-5">
-        <div class="mt-2 text-center"></div>
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-5">
+          <div class="mt-2 text-center"></div>
+        </div>
+        <div class="col-md-4"></div>
       </div>
-      <div class="col-md-4"></div>
     </div>
-  </div>
   </v-app>
 </template>
 <script>
@@ -226,8 +255,7 @@ export default {
         description: "",
         github_link: "",
         files: null,
-      }
-      
+      },
     };
   },
   methods: {
@@ -235,76 +263,83 @@ export default {
       $(".dropdown-toggle").dropdown();
     },
     async checkLinkGithub() {
-      if(this.softwarePortfolio.github_link == "" || this.softwarePortfolio.github_link.includes("https://github.com/")) {
-        this.error_input = ""
-      } else { 
-        this.error_input = "error-input"
+      if (
+        this.softwarePortfolio.github_link == "" ||
+        this.softwarePortfolio.github_link.includes("https://github.com/")
+      ) {
+        this.error_input = "";
+      } else {
+        this.error_input = "error-input";
       }
-
-
     },
     async resetValues() {
-      this.error_input = ""
-      this.designPortfolio = {
+      this.error_input = "";
+      (this.designPortfolio = {
         title: "",
         description: "",
         links: [],
         files: null,
-      },
-      this.photoGallery = {
-        title: "",
-        description: "",
-        files: null,
-      },
-      this.softwarePortfolio = {
-        title: "",
-        description: "",
-        github_link: "",
-        files: null,
-      }
+      }),
+        (this.photoGallery = {
+          title: "",
+          description: "",
+          files: null,
+        }),
+        (this.softwarePortfolio = {
+          title: "",
+          description: "",
+          github_link: "",
+          files: null,
+        });
     },
     async createProject() {
       const data = new FormData();
-      if(this.templateChoice == "1") {
-        data.append("designPortfolioTitle", this.designPortfolio.title)
-        data.append("designPortfolioDescription", this.designPortfolio.description)
-        data.append("designPortfolioLinks", this.designPortfolio.links)
-        data.append("templateChoice", this.templateChoice)
-          this.designPortfolio.files.forEach(file => {
-              data.append("images", file)
-          })
-      } 
-
-      else if(this.templateChoice == "2") {
-        data.append("softwarePortfolioTitle", this.softwarePortfolio.title)
-        data.append("softwarePortfolioDescription", this.softwarePortfolio.description)
-        data.append("softwarePortfolioLinks", this.softwarePortfolio.github_link)
-        data.append("templateChoice", this.templateChoice)
-          this.softwarePortfolio.files.forEach(file => {
-              data.append("images", file)
-          })
+      if (this.templateChoice == "1") {
+        data.append("designPortfolioTitle", this.designPortfolio.title);
+        data.append(
+          "designPortfolioDescription",
+          this.designPortfolio.description
+        );
+        data.append("designPortfolioLinks", this.designPortfolio.links);
+        data.append("templateChoice", this.templateChoice);
+        this.designPortfolio.files.forEach((file) => {
+          data.append("images", file);
+        });
+      } else if (this.templateChoice == "2") {
+        data.append("softwarePortfolioTitle", this.softwarePortfolio.title);
+        data.append(
+          "softwarePortfolioDescription",
+          this.softwarePortfolio.description
+        );
+        data.append(
+          "softwarePortfolioLinks",
+          this.softwarePortfolio.github_link
+        );
+        data.append("templateChoice", this.templateChoice);
+        this.softwarePortfolio.files.forEach((file) => {
+          data.append("images", file);
+        });
+      } else if (this.templateChoice == "3") {
+        data.append("photoGalleryTitle", this.photoGallery.title);
+        data.append("photoGalleryDescription", this.photoGallery.description);
+        data.append("templateChoice", this.templateChoice);
+        this.photoGallery.files.forEach((file) => {
+          data.append("images", file);
+        });
       }
 
-      else if(this.templateChoice == "3") {
-        data.append("photoGalleryTitle", this.photoGallery.title)
-        data.append("photoGalleryDescription", this.photoGallery.description)
-        data.append("templateChoice", this.templateChoice)
-          this.photoGallery.files.forEach(file => {
-              data.append("images", file)
-          })
-      }
-
-      if(!this.error_input) {
-        const res = await axios.post(
-        "https://my-portfolio-wa.herokuapp.com/portfolio", data)
+      if (!this.error_input) {
+        const res = await axios
+          .post("https://my-portfolio-wa.herokuapp.com/portfolio", data)
           .then((response) => {
-          if(response) {
-            this.alertResponseData = response.data.msg
-            this.dialog = true;     
-          }
-        })
+            if (response) {
+              this.alertResponseData = response.data.msg;
+              this.dialog = true;
+            }
+          });
       } else {
-        this.alertResponseData = "A field is not valid.\nReturning you to the portfolio page."
+        this.alertResponseData =
+          "A field is not valid.\nReturning you to the portfolio page.";
         this.dialog = true;
       }
     },
@@ -377,15 +412,15 @@ textarea:focus {
 .rl-cp {
   padding: 10px;
   color: white;
-  border: 1px solid white ;
-  background-color: #089965 ;
+  border: 1px solid white;
+  background-color: #089965;
   transition: 0.2s;
 }
 
 .rl-cp:hover:enabled {
-  border: 1px solid #089965 ;
-  color: #089965 ;
-  background-color: white ;
+  border: 1px solid #089965;
+  color: #089965;
+  background-color: white;
   transition: 0.2s;
 }
 

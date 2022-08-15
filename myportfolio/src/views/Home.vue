@@ -4,9 +4,15 @@
       <h1>Welcome to MyPortfolio, enjoy your stay!</h1>
     </div>
     <div class="container-center">
-      <router-link to="/profile"><button class="btn-primary"> VIEW PROFILE</button></router-link>
-      <router-link to="/create-portfolio"><button class="btn-secondary">CREATE PORTFOLIO</button></router-link>
-      <router-link to="/portfolio"><button class="btn-secondary">VIEW PORTFOLIO</button></router-link>
+      <router-link to="/profile"
+        ><button class="btn-primary">VIEW PROFILE</button></router-link
+      >
+      <router-link to="/create-portfolio"
+        ><button class="btn-secondary">CREATE PORTFOLIO</button></router-link
+      >
+      <router-link to="/portfolio"
+        ><button class="btn-secondary">VIEW PORTFOLIO</button></router-link
+      >
     </div>
     <!--     <div class="wrap">
       <div class="svg-circle-big-beginning"></div>

@@ -1,37 +1,48 @@
 <template>
-<v-app>
-  <Dialog :alertResponseData="alertResponseData" :dialog="dialog"/>
-  <div class="profile py-10" v-for="data in userID"
-          :key="data.id">
+  <v-app>
+    <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
+    <div class="profile py-10" v-for="data in userID" :key="data.id">
       <div class="row">
         <div class="col-md-3 border-right">
           <div
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
-              <img id="profilePicture" :src="imageRef + image" width=200px height="200px" alt="">
+              <img
+                id="profilePicture"
+                :src="imageRef + image"
+                width="200px"
+                height="200px"
+                alt=""
+              />
               <v-file-input
                 v-model="file"
                 name="image"
                 accept="image/png"
-                label="Choose an Image" 
-                @change="loading=false"            
+                label="Choose an Image"
+                @change="loading = false"
               />
-              <span class="text-black-50 font-weight-bold">Suggested size: 200x200</span>
+              <span class="text-black-50 font-weight-bold"
+                >Suggested size: 200x200</span
+              >
               <form>
-              <!-- <input type="text" name="name"> -->
-              <input :disabled="loading" type="button" @click="updateProfileImage" value="Save Image" name="submit" class="rl-cp w-100 mt-2">
-            </form>
-            <div v-if="loading" class="mt-5 errorMessage">
-              {{ errorMessage }}
-            </div>
+                <!-- <input type="text" name="name"> -->
+                <input
+                  :disabled="loading"
+                  type="button"
+                  @click="updateProfileImage"
+                  value="Save Image"
+                  name="submit"
+                  class="rl-cp w-100 mt-2"
+                />
+              </form>
+              <div v-if="loading" class="mt-5 errorMessage">
+                {{ errorMessage }}
+              </div>
             </div>
           </div>
         </div>
-        <div
-          class="col-md-5"
-          
-        >
+        <div class="col-md-5">
           <div class="p-3 py-5">
             <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 class="text-right">Profile Settings</h4>
@@ -107,21 +118,27 @@
                 />
               </div>
               <div class="col-md-12">
-                <label class="labels">Education</label
-                >
+                <label class="labels">Education</label>
                 <div>
-                  <button class="labels form-add" @click="educationCount++">Add+</button>
+                  <button class="labels form-add" @click="educationCount++">
+                    Add+
+                  </button>
                 </div>
                 <div v-for="(edu, i) in educationCount" :key="i">
                   <input
-                  required
-                  v-model="education[i]"
-                  type="text"
-                  class="form-control form-education"
-                  placeholder="Education..."
-                  value=""
-                />
-                  <button class="labels form-remove" @click="removeEducation(education[i])">Remove</button>
+                    required
+                    v-model="education[i]"
+                    type="text"
+                    class="form-control form-education"
+                    placeholder="Education..."
+                    value=""
+                  />
+                  <button
+                    class="labels form-remove"
+                    @click="removeEducation(education[i])"
+                  >
+                    Remove
+                  </button>
                 </div>
               </div>
             </div>
@@ -186,11 +203,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
           <div class="mt-2 text-center col-md-12 p-3">
-            <button
-              class="rl-cp w-100"
-              type="button"
-              @click="updateUser"
-            >
+            <button class="rl-cp w-100" type="button" @click="updateUser">
               Save Profile
             </button>
           </div>
@@ -203,7 +216,7 @@
 
 <script>
 import axios from "axios";
-import Dialog from "@/components/Dialog.vue"
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "Profile",
@@ -218,7 +231,7 @@ export default {
       postcode: "",
       education: [],
       educationCount: null,
-      country: "", 
+      country: "",
       file: null,
       imageRef: "data:image/png;base64,",
       image: null,
@@ -237,10 +250,10 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/user"
       );
-      this.educationCount = response.data.userData.education.length + 1
+      this.educationCount = response.data.userData.education.length + 1;
       await response.data.userData.education.forEach((edu) => {
-        this.education.push(edu)
-      })
+        this.education.push(edu);
+      });
       this.userID.push({
         _id: response.data._id,
         firstName: response.data.firstName,
@@ -254,69 +267,75 @@ export default {
       });
     },
     async updateUser() {
-      const res = await axios.patch(
-        "https://my-portfolio-wa.herokuapp.com/user/" + this.userID[0]._id,
-        {
-          firstName: this.userID[0].firstName,
-          lastName: this.userID[0].lastName,
-          email: this.userID[0].email,
-          userData: {
-            mobile_number: this.userID[0].mobile_number,
-            country: this.userID[0].country,
-            address: this.userID[0].address,
-            postcode: this.userID[0].postcode,
-            education: this.education,
-          },
-        }
-      ).then((response) => {
-        this.alertResponseData = response.data.msg 
-        this.dialog = true
-      });
+      const res = await axios
+        .patch(
+          "https://my-portfolio-wa.herokuapp.com/user/" + this.userID[0]._id,
+          {
+            firstName: this.userID[0].firstName,
+            lastName: this.userID[0].lastName,
+            email: this.userID[0].email,
+            userData: {
+              mobile_number: this.userID[0].mobile_number,
+              country: this.userID[0].country,
+              address: this.userID[0].address,
+              postcode: this.userID[0].postcode,
+              education: this.education,
+            },
+          }
+        )
+        .then((response) => {
+          this.alertResponseData = response.data.msg;
+          this.dialog = true;
+        });
     },
     async updateProfileImage() {
       const data = new FormData();
-      if(this.file) {
-        data.append("name", Math.floor(Math.random() * 1000000000001) + "_" + this.file.name.toLowerCase())
-        data.append("image", this.file)
-        await axios.post("https://my-portfolio-wa.herokuapp.com/profile_image", data)
-        .then((response) => {
-        this.alertResponseData = response.data.msg 
-        this.dialog = true
-      });
+      if (this.file) {
+        data.append(
+          "name",
+          Math.floor(Math.random() * 1000000000001) +
+            "_" +
+            this.file.name.toLowerCase()
+        );
+        data.append("image", this.file);
+        await axios
+          .post("https://my-portfolio-wa.herokuapp.com/profile_image", data)
+          .then((response) => {
+            this.alertResponseData = response.data.msg;
+            this.dialog = true;
+          });
       } else {
-        this.loading = true
-        this.errorMessage = "Choose an image!"
+        this.loading = true;
+        this.errorMessage = "Choose an image!";
       }
     },
     async getImage() {
-      const response = await axios("https://my-portfolio-wa.herokuapp.com/profile_image");
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/profile_image"
+      );
       /* this.image = btoa(
           String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
         )   */
-      this.image = response.data.img.data
-      this.educationCount--
+      this.image = response.data.img.data;
+      this.educationCount--;
     },
     async removeEducation(id) {
-      const index = this.education.indexOf(id)
-      this.education.splice(index, 1)
-      this.educationCount--
-    }
+      const index = this.education.indexOf(id);
+      this.education.splice(index, 1);
+      this.educationCount--;
+    },
   },
   components: {
-    Dialog
-  }
+    Dialog,
+  },
 };
-
-
 </script>
 
 <style scoped>
-
 input:disabled {
   opacity: 0.6;
   cursor: default;
 }
-
 
 ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -356,7 +375,7 @@ input:disabled {
 
 .form-add {
   padding: 5px;
-  background-color:#089965;
+  background-color: #089965;
   color: white;
   border: 1px solid white;
   transition: 0.2s;
@@ -371,7 +390,7 @@ input:disabled {
 .form-remove {
   margin-top: 10px;
   padding: 5px;
-  background-color:#ce1616;
+  background-color: #ce1616;
   color: white;
   border: 1px solid white;
   transition: 0.2s;
@@ -409,8 +428,8 @@ input:disabled {
 }
 
 .errorMessage {
-  background-color: white ;
-  border: 1px solid red ;
+  background-color: white;
+  border: 1px solid red;
   color: red;
   padding: 10px;
 }
@@ -418,15 +437,15 @@ input:disabled {
 .rl-cp {
   padding: 10px;
   color: white;
-  border: 1px solid white ;
-  background-color: #089965 ;
+  border: 1px solid white;
+  background-color: #089965;
   transition: 0.2s;
 }
 
 .rl-cp:hover:enabled {
-  border: 1px solid #089965 ;
-  color: #089965 ;
-  background-color: white ;
+  border: 1px solid #089965;
+  color: #089965;
+  background-color: white;
   transition: 0.2s;
 }
 
@@ -443,5 +462,4 @@ input:disabled {
 .col-md-12 {
   padding: 6px !important;
 }
-
 </style>

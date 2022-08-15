@@ -1,6 +1,6 @@
 <template>
   <v-app>
-  <div class="py-10">
+    <div class="py-10">
       <div class="row">
         <div
           v-for="data in userData"
@@ -11,13 +11,17 @@
             class="d-flex flex-column align-items-center text-center p-3 py-5"
           >
             <div>
-              <img id="profilePicture" :src="imageRef + image" width=200px height="200px">
+              <img
+                id="profilePicture"
+                :src="imageRef + image"
+                width="200px"
+                height="200px"
+              />
             </div>
 
             <span class="mt-2 font-weight-bold">
               {{ data.firstName }} {{ " " }} {{ data.lastName }}</span
-            ><span class="text-black-50 mt-2">{{ data.email }}</span
-            >
+            ><span class="text-black-50 mt-2">{{ data.email }}</span>
           </div>
         </div>
         <div
@@ -57,9 +61,11 @@
                 <label class="labels">Email</label>
                 <p>{{ data.email }}</p>
               </div>
-              <div class="col-md-12" >
+              <div class="col-md-12">
                 <label class="labels">Education</label>
-                <p v-for="(edu, i) in data.education" :key="i">{{ data.education[i] }}</p>
+                <p v-for="(edu, i) in data.education" :key="i">
+                  {{ data.education[i] }}
+                </p>
               </div>
             </div>
             <div class="row mt-3">
@@ -127,15 +133,13 @@ export default {
       image: "",
       imageId: "",
       userData: [],
-      imageReference: null
-
+      imageReference: null,
     };
   },
   mounted() {
-    this.getUserData()
+    this.getUserData();
     this.getImage();
     /* this.setPicture(); */
-    
   },
   methods: {
     /* setPicture() {
@@ -161,12 +165,14 @@ export default {
       });
     },
     async getImage() {
-      const response = await axios ("https://my-portfolio-wa.herokuapp.com/profile_image");
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/profile_image"
+      );
       /* this.image = btoa(
           String.fromCharCode(...new Uint8Array(response.data.img.data))
         )   */
-      this.image = response.data.img.data
-    }     
+      this.image = response.data.img.data;
+    },
   },
 };
 </script>
@@ -266,15 +272,15 @@ label {
 .rl-cp {
   padding: 10px;
   color: white;
-  border: 1px solid white ;
-  background-color: #089965 ;
+  border: 1px solid white;
+  background-color: #089965;
   transition: 0.2s;
 }
 
 .rl-cp:hover {
-  border: 1px solid #089965 ;
-  color: #089965 ;
-  background-color: white ;
+  border: 1px solid #089965;
+  color: #089965;
+  background-color: white;
   transition: 0.2s;
 }
 
