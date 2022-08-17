@@ -181,6 +181,7 @@ export default {
   },
   mounted() {},
   methods: {
+    sidebar() {},
     logout() {
       Auth.logout();
       this.$router.push({ name: "Login" });

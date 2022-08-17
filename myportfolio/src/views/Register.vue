@@ -119,6 +119,7 @@ export default {
               address: null,
               postcode: null,
               education: [],
+              workExperience: [],
             },
           })
           .then((response) => {

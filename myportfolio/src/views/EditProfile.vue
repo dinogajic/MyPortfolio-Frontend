@@ -164,28 +164,95 @@
             >
               <span>Edit Experience</span
               ><span class="border px-3 p-1 add-experience"
-                ><i class="fa fa-plus"></i>&nbsp;Experience</span
+                ><i class="fa fa-plus"></i>&nbsp; Work Experience</span
               >
             </div>
             <br />
-            <div class="col-md-12">
-              <label class="labels">Experience in Designing</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder="Experience"
-                value=""
-              />
+            <div
+              v-for="(work, i) in data.workExperience"
+              :key="i"
+              class="work-experience"
+            >
+              <div class="justify-content-between align-items-center d-flex">
+                <span
+                  ><h5>{{ work.jobName }}</h5></span
+                >
+                <span style="color: #25d294; font-size: 14px"
+                  >{{ work.jobStartYear }} - {{ work.jobEndYear }}</span
+                >
+              </div>
+
+              <p>{{ work.jobDescription }}</p>
+              <button
+                color="red"
+                max-height="25px"
+                class="form-remove"
+                style="font-size: 13px"
+                @click="removeWorkExperience(i)"
+              >
+                Remove
+              </button>
             </div>
-            <br />
-            <div class="col-md-12">
-              <label class="labels">Additional Details</label
-              ><input
-                type="text"
-                class="form-control"
-                placeholder="Additional details"
-                value=""
-              />
+            <button
+              class="labels form-add mt-2"
+              @click="showWorkExperience = true"
+            >
+              Add+
+            </button>
+
+            <div
+              class="col-md-12 align-items-center justify-content-between"
+              v-if="showWorkExperience"
+            >
+              <form @submit.prevent="saveWorkExperienceDetails">
+                <div>
+                  <label class="labels" style="display: block !important"
+                    >Job title</label
+                  >
+                  <input
+                    required
+                    type="text"
+                    class="form-control"
+                    placeholder="Job title.."
+                    value=""
+                    v-model="workExperienceDetails.jobName"
+                  />
+                </div>
+                <div class="form-experience">
+                  <label class="labels">From:</label>
+                  <input
+                    required
+                    type="date"
+                    class="form-control col-md-12"
+                    placeholder="Starting year.."
+                    value=""
+                    v-model="workExperienceDetails.jobStartYear"
+                  />
+                  <label class="labels form-experience">To:</label>
+                  <input
+                    required
+                    type="date"
+                    class="form-control col-md-12"
+                    placeholder="Ending year.."
+                    value=""
+                    v-model="workExperienceDetails.jobEndYear"
+                  />
+                </div>
+                <div class="form-experience">
+                  <label class="labels" style="display: block !important"
+                    >Description:</label
+                  >
+                  <v-textarea
+                    counter
+                    required
+                    :rules="rules"
+                    type="text"
+                    placeholder="Job description..."
+                    v-model="workExperienceDetails.jobDescription"
+                  ></v-textarea>
+                </div>
+                <button type="submit">Save</button>
+              </form>
             </div>
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5"
@@ -222,6 +289,7 @@ export default {
   name: "Profile",
   data() {
     return {
+      rules: [(v) => v.length >= 100 || "Min 100 characters"],
       userID: [],
       firstName: "",
       lastName: "",
@@ -239,6 +307,14 @@ export default {
       loading: false,
       dialog: false,
       alertResponseData: "",
+      workExperience: [],
+      showWorkExperience: false,
+      workExperienceDetails: {
+        jobName: "",
+        jobStartYear: null,
+        jobEndYear: null,
+        jobDescription: "",
+      },
     };
   },
   mounted() {
@@ -254,6 +330,7 @@ export default {
       await response.data.userData.education.forEach((edu) => {
         this.education.push(edu);
       });
+      this.workExperience = response.data.userData.workExperience;
       this.userID.push({
         _id: response.data._id,
         firstName: response.data.firstName,
@@ -264,6 +341,7 @@ export default {
         postcode: response.data.userData.postcode,
         education: response.data.userData.education,
         country: response.data.userData.country,
+        workExperience: response.data.userData.workExperience,
       });
     },
     async updateUser() {
@@ -280,6 +358,7 @@ export default {
               address: this.userID[0].address,
               postcode: this.userID[0].postcode,
               education: this.education,
+              workExperience: this.workExperience,
             },
           }
         )
@@ -323,6 +402,15 @@ export default {
       const index = this.education.indexOf(id);
       this.education.splice(index, 1);
       this.educationCount--;
+    },
+    async saveWorkExperienceDetails() {
+      this.workExperience.push(this.workExperienceDetails);
+      this.showWorkExperience = false;
+      console.log("Saved" + this.workExperienceDetails);
+    },
+    async removeWorkExperience(id) {
+      const index = this.workExperience.indexOf(id);
+      this.workExperience.splice(index, 1);
     },
   },
   components: {
@@ -400,6 +488,21 @@ input:disabled {
   background-color: white;
   color: #ce1616;
   border: 1px solid #ce1616;
+}
+
+.form-experience {
+  margin-top: 10px;
+}
+
+.experience-div {
+  padding: 0 !important;
+}
+
+.work-experience {
+  border: 1px solid #089965;
+  padding: 10px;
+  margin-top: 10px;
+  word-wrap: break-word;
 }
 
 .back:hover {
