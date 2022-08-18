@@ -119,26 +119,62 @@
               </div>
               <div class="col-md-12">
                 <label class="labels">Education</label>
+                <div
+                  v-for="(edu, i) in data.education"
+                  :key="i"
+                  class="work-experience"
+                >
+                  <span
+                    ><h5>{{ edu.schoolName }}</h5></span
+                  >
+                  <div
+                    class="align-items-center justify-content-between d-flex"
+                  >
+                    <span style="color: #25d294; font-size: 16px"
+                      >{{ edu.schoolStartYear }} - {{ edu.schoolEndYear }}</span
+                    >
+                    <button
+                      color="red"
+                      max-height="25px"
+                      class="form-remove"
+                      style="font-size: 13px"
+                      @click="removeEducation(i)"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                </div>
                 <div>
-                  <button class="labels form-add" @click="educationCount++">
+                  <button class="form-add mt-2" @click="showEducation = true">
                     Add+
                   </button>
                 </div>
-                <div v-for="(edu, i) in educationCount" :key="i">
-                  <input
-                    required
-                    v-model="education[i]"
-                    type="text"
-                    class="form-control form-education"
-                    placeholder="Education..."
-                    value=""
-                  />
-                  <button
-                    class="labels form-remove"
-                    @click="removeEducation(education[i])"
-                  >
-                    Remove
-                  </button>
+                <div v-if="showEducation">
+                  <form @submit.prevent="saveEducationDetails()">
+                    <input
+                      required
+                      v-model="educationDetails.schoolName"
+                      type="text"
+                      class="form-control form-education"
+                      placeholder="School name..."
+                      value=""
+                    />
+                    <input
+                      required
+                      v-model="educationDetails.schoolStartYear"
+                      type="date"
+                      class="form-control form-education"
+                      value=""
+                    />
+                    <input
+                      required
+                      v-model="educationDetails.schoolEndYear"
+                      type="date"
+                      class="form-control form-education"
+                      value=""
+                    />
+                    <button type="submit" class="form-add mt-2">Save</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -187,16 +223,12 @@
                 color="red"
                 max-height="25px"
                 class="form-remove"
-                style="font-size: 13px"
                 @click="removeWorkExperience(i)"
               >
                 Remove
               </button>
             </div>
-            <button
-              class="labels form-add mt-2"
-              @click="showWorkExperience = true"
-            >
+            <button class="form-add mt-2" @click="showWorkExperience = true">
               Add+
             </button>
 
@@ -298,7 +330,13 @@ export default {
       address: "",
       postcode: "",
       education: [],
+      educationDetails: {
+        schoolName: "",
+        schoolStartYear: null,
+        schoolEndYear: null,
+      },
       educationCount: null,
+      showEducation: false,
       country: "",
       file: null,
       imageRef: "data:image/png;base64,",
@@ -326,11 +364,10 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/user"
       );
-      this.educationCount = response.data.userData.education.length + 1;
-      await response.data.userData.education.forEach((edu) => {
-        this.education.push(edu);
-      });
+
+      this.education = response.data.userData.education;
       this.workExperience = response.data.userData.workExperience;
+
       this.userID.push({
         _id: response.data._id,
         firstName: response.data.firstName,
@@ -398,6 +435,10 @@ export default {
       this.image = response.data.img.data;
       this.educationCount--;
     },
+    async saveEducationDetails() {
+      this.education.push(this.educationDetails);
+      this.showEducation = false;
+    },
     async removeEducation(id) {
       const index = this.education.indexOf(id);
       this.education.splice(index, 1);
@@ -406,7 +447,6 @@ export default {
     async saveWorkExperienceDetails() {
       this.workExperience.push(this.workExperienceDetails);
       this.showWorkExperience = false;
-      console.log("Saved" + this.workExperienceDetails);
     },
     async removeWorkExperience(id) {
       const index = this.workExperience.indexOf(id);
@@ -467,6 +507,7 @@ input:disabled {
   color: white;
   border: 1px solid white;
   transition: 0.2s;
+  font-size: 13px;
 }
 
 .form-add:hover {
@@ -482,6 +523,7 @@ input:disabled {
   color: white;
   border: 1px solid white;
   transition: 0.2s;
+  font-size: 13px;
 }
 
 .form-remove:hover {

@@ -63,9 +63,22 @@
               </div>
               <div class="col-md-12">
                 <label class="labels">Education</label>
-                <p v-for="(edu, i) in data.education" :key="i">
-                  {{ data.education[i] }}
-                </p>
+                <div
+                  v-for="(edu, i) in data.education"
+                  :key="i"
+                  class="work-experience"
+                >
+                  <span
+                    ><h5>{{ edu.schoolName }}</h5></span
+                  >
+                  <div
+                    class="align-items-center justify-content-between d-flex"
+                  >
+                    <span style="color: #25d294; font-size: 16px"
+                      >{{ edu.schoolStartYear }} - {{ edu.schoolEndYear }}</span
+                    >
+                  </div>
+                </div>
               </div>
             </div>
             <div class="row mt-3">
@@ -76,15 +89,31 @@
             </div>
           </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" v-for="data in userData" :key="data.id">
           <div class="p-3 py-5">
-            <br />
-            <div class="col-md-12">
-              <label class="labels">Experience in Designing</label>
-            </div>
-            <br />
-            <div class="col-md-12">
-              <label class="labels">Additional Details</label>
+            <div
+              v-for="(work, i) in data.workExperience"
+              :key="i"
+              class="work-experience"
+            >
+              <div class="justify-content-between align-items-center d-flex">
+                <span
+                  ><h5>{{ work.jobName }}</h5></span
+                >
+                <span style="color: #25d294; font-size: 14px"
+                  >{{ work.jobStartYear }} - {{ work.jobEndYear }}</span
+                >
+              </div>
+
+              <p>{{ work.jobDescription }}</p>
+              <button
+                color="red"
+                max-height="25px"
+                class="form-remove"
+                @click="removeWorkExperience(i)"
+              >
+                Remove
+              </button>
             </div>
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5"
@@ -102,11 +131,13 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
           <div class="mt-2 text-center" v-for="data in userData" :key="data.id">
-            <router-link :to="'/edit-profile/' + data._id"
-              ><button class="rl-cp w-100" type="button">
-                Edit Profile
-              </button></router-link
-            >
+            <div class="p-3 py-5">
+              <router-link :to="'/edit-profile/' + data._id"
+                ><button class="rl-cp w-100" type="button">
+                  Edit Profile
+                </button></router-link
+              >
+            </div>
           </div>
         </div>
         <div class="col-md-4"></div>
@@ -154,6 +185,7 @@ export default {
         address: response.data.userData.address,
         postcode: response.data.userData.postcode,
         education: response.data.userData.education,
+        workExperience: response.data.userData.workExperience,
       });
     },
     async getImage() {
@@ -210,6 +242,13 @@ label {
 .form-control:focus {
   box-shadow: none;
   border-color: #84e3c1;
+}
+
+.work-experience {
+  border: 1px solid #089965;
+  padding: 10px;
+  margin-top: 10px;
+  word-wrap: break-word;
 }
 
 .profile-button {
