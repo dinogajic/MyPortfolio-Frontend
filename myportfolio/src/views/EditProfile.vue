@@ -198,10 +198,7 @@
             <div
               class="d-flex justify-content-between align-items-center experience"
             >
-              <span>Edit Experience</span
-              ><span class="border px-3 p-1 add-experience"
-                ><i class="fa fa-plus"></i>&nbsp; Work Experience</span
-              >
+              <span><h4>Work Experience</h4></span>
             </div>
             <br />
             <div

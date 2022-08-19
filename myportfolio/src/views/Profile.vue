@@ -91,6 +91,7 @@
         </div>
         <div class="col-md-4" v-for="data in userData" :key="data.id">
           <div class="p-3 py-5">
+            <span><h4>Work Experience</h4></span>
             <div
               v-for="(work, i) in data.workExperience"
               :key="i"
@@ -106,14 +107,6 @@
               </div>
 
               <p>{{ work.jobDescription }}</p>
-              <button
-                color="red"
-                max-height="25px"
-                class="form-remove"
-                @click="removeWorkExperience(i)"
-              >
-                Remove
-              </button>
             </div>
             <div
               class="d-flex flex-column align-items-center text-center p-3 py-5"
