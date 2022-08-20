@@ -61,6 +61,12 @@
                 <label class="labels">Email</label>
                 <p>{{ data.email }}</p>
               </div>
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <label class="labels">Country</label>
+                  <p>{{ data.country }}</p>
+                </div>
+              </div>
               <div class="col-md-12">
                 <label class="labels">Education</label>
                 <div
@@ -79,12 +85,6 @@
                     >
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <label class="labels">Country</label>
-                <p>{{ data.country }}</p>
               </div>
             </div>
           </div>

@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import Vue from "vue";
 import VueRouter from "vue-router";
 import { Auth } from "@/services";
@@ -44,6 +46,16 @@ const routes = [
     path: "*",
     name: "NotFound",
     component: () => import("../views/NotFound.vue"),
+  },
+  {
+    path: "/password-reset",
+    name: "PasswordReset",
+    component: () => import("../views/PasswordReset.vue"),
+  },
+  {
+    path: "/public/:id",
+    name: "PublicPage",
+    component: () => import("../views/PublicPage.vue"),
   },
 ];
 

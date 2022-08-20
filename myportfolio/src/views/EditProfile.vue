@@ -117,6 +117,19 @@
                   value=""
                 />
               </div>
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="labels">Country</label
+                  ><input
+                    required
+                    v-model="data.country"
+                    type="text"
+                    class="form-control"
+                    placeholder="Country..."
+                    value=""
+                  />
+                </div>
+              </div>
               <div class="col-md-12">
                 <label class="labels">Education</label>
                 <div
@@ -176,19 +189,6 @@
                     <button type="submit" class="form-add mt-2">Save</button>
                   </form>
                 </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-12">
-                <label class="labels">Country</label
-                ><input
-                  required
-                  v-model="data.country"
-                  type="text"
-                  class="form-control"
-                  placeholder="Country..."
-                  value=""
-                />
               </div>
             </div>
           </div>
