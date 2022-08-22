@@ -130,31 +130,44 @@
                   Edit Profile
                 </button></router-link
               >
+              <button
+                class="rl-cp w-100 mt-2"
+                type="button"
+                @click="resetPassword"
+              >
+                Change Password
+              </button>
             </div>
           </div>
         </div>
-        <div class="col-md-4"></div>
       </div>
     </div>
+    <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
+import Dialog from "@/components/Dialog.vue";
+
 export default {
   name: "Profile",
   data() {
     return {
+      alertResponseData: "",
+      dialog: false,
       imageRef: "data:image/png;base64,",
       image: "",
       imageId: "",
       userData: [],
       imageReference: null,
+      userEmail: "",
     };
   },
   mounted() {
     this.getUserData();
     this.getImage();
+
     /* this.setPicture(); */
   },
   methods: {
@@ -164,10 +177,23 @@ export default {
         console.log("Hahahaha")
       }
     }, */
+    async resetPassword() {
+      const response = await axios
+        .post("https://my-portfolio-wa.herokuapp.com/change-password", {
+          email: this.userData[0].email,
+        })
+        .then((response) => {
+          if (response) {
+            this.alertResponseData = response.data.msg;
+            this.dialog = true;
+          }
+        });
+    },
     async getUserData() {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/user"
       );
+      this.userEmail = response.data.email;
       this.userData.push({
         _id: response.data._id,
         email: response.data.email,
@@ -190,6 +216,9 @@ export default {
         )   */
       this.image = response.data.img.data;
     },
+  },
+  components: {
+    Dialog,
   },
 };
 </script>

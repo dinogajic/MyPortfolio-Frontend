@@ -1,11 +1,7 @@
 <template>
   <v-app>
     <div class="container">
-      <form
-        @submit.prevent="registerUser"
-        @keydown.space.prevent
-        class="form-register"
-      >
+      <form @submit.prevent="registerUser" @keydown.space.prevent>
         <div class="form">
           <div class="form-group">
             <label for="inputName">Name</label>

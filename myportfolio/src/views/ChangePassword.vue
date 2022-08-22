@@ -1,37 +1,41 @@
 <template>
   <v-app>
     <div class="container">
-      <form ref="form" @submit.prevent="resetPassword">
-        <label>Email</label>
-        <input type="email" name="email" v-model="email" class="form-control" />
-        <div class="submit-button">
-          <button type="submit" class="rl-cp">Send</button>
-        </div>
+      <form @submit.prevent="changePassword">
+        <label for="inputlEmailLabel">New Password</label>
+        <input type="password" class="form-control" v-model="newPassword" />
+        <button type="submit" class="rl-cp">Send</button>
       </form>
       <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
     </div>
   </v-app>
 </template>
-
 <script>
 import axios from "axios";
 import Dialog from "@/components/Dialog.vue";
 
 export default {
-  name: "PasswordReset",
+  name: "ChangePassword",
   data() {
     return {
       alertResponseData: "",
       dialog: false,
-      email: null,
+      newPassword: null,
     };
   },
+  mounted() {},
   methods: {
-    async resetPassword() {
+    async changePassword() {
       const response = await axios
-        .post("https://my-portfolio-wa.herokuapp.com/change-password", {
-          email: this.email,
-        })
+        .post(
+          "https://my-portfolio-wa.herokuapp.com/change-password/" +
+            this.$route.params.id +
+            "/" +
+            this.$route.params.token,
+          {
+            password: this.newPassword,
+          }
+        )
         .then((response) => {
           if (response) {
             this.alertResponseData = response.data.msg;

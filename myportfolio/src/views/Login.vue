@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <form @submit.prevent="login" @keydown.space.prevent class="form-login">
+    <form @submit.prevent="login" @keydown.space.prevent>
       <div class="form">
         <div class="form-group">
           <label for="inputlEmailLabel">E-mail</label>
@@ -38,7 +38,7 @@
           >
         </div>
         <a class="passwordreset" href="/password-reset">Forgotten password?</a>
-        <div class="submit-button">
+        <div>
           <button type="submit" class="rl-cp">Log In</button>
         </div>
       </div>

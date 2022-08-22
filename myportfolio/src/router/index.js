@@ -57,6 +57,11 @@ const routes = [
     name: "PublicPage",
     component: () => import("../views/PublicPage.vue"),
   },
+  {
+    path: "/change-password/:id/:token",
+    name: "ChangePassword",
+    component: () => import("../views/ChangePassword.vue"),
+  },
 ];
 
 const router = new VueRouter({
@@ -67,11 +72,13 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   const id = to.params.id;
+  const token = to.params.token;
   const publicPages = [
     "/login",
     "/register",
     `/public/${id}`,
     "/password-reset",
+    `/change-password/${id}/${token}`,
   ];
   const loginNeeded = !publicPages.includes(to.path);
   const user = Auth.getUser();
