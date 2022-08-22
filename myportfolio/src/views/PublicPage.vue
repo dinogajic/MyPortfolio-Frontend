@@ -159,10 +159,8 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/public/" + this.$route.params.id
       );
-      console.log(response);
       if (response.data.msg) {
-        /* this.$router.push({ path: "/" }); */
-        console.log(2);
+        console.log(response.data.msg);
       } else {
         this.userData.push({
           _id: response.data[0]._id,

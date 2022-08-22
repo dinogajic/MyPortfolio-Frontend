@@ -37,7 +37,7 @@
             >Show password</label
           >
         </div>
-        <a class="passwordreset" href="/">Forgotten password?</a>
+        <a class="passwordreset" href="/password-reset">Forgotten password?</a>
         <div class="submit-button">
           <button type="submit" class="rl-cp">Log In</button>
         </div>

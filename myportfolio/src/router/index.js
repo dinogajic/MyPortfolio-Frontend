@@ -66,7 +66,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/login", "/register"];
+  const id = to.params.id;
+  const publicPages = [
+    "/login",
+    "/register",
+    `/public/${id}`,
+    "/password-reset",
+  ];
   const loginNeeded = !publicPages.includes(to.path);
   const user = Auth.getUser();
 
