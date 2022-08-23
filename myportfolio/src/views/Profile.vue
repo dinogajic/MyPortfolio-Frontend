@@ -133,7 +133,7 @@
               <button
                 class="rl-cp w-100 mt-2"
                 type="button"
-                @click="resetPassword"
+                @click="changePassword"
               >
                 Change Password
               </button>
@@ -142,6 +142,11 @@
         </div>
       </div>
     </div>
+    <DialogChoice
+      :alertChoiceData="alertChoiceData"
+      :choiceDialog="choiceDialog"
+      :resetPassword="resetPassword"
+    />
     <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
   </v-app>
 </template>
@@ -149,12 +154,15 @@
 <script>
 import axios from "axios";
 import Dialog from "@/components/Dialog.vue";
+import DialogChoice from "@/components/DialogChoice.vue";
 
 export default {
   name: "Profile",
   data() {
     return {
+      alertChoiceData: "",
       alertResponseData: "",
+      choiceDialog: false,
       dialog: false,
       imageRef: "data:image/png;base64,",
       image: "",
@@ -167,16 +175,12 @@ export default {
   mounted() {
     this.getUserData();
     this.getImage();
-
-    /* this.setPicture(); */
   },
   methods: {
-    /* setPicture() {
-      console.log(document.getElementById("foo"))
-      if(document.getElementById("foo")) {
-        console.log("Hahahaha")
-      }
-    }, */
+    async changePassword() {
+      this.alertChoiceData = "Are you sure you want to change your password?";
+      this.choiceDialog = true;
+    },
     async resetPassword() {
       const response = await axios
         .post("https://my-portfolio-wa.herokuapp.com/change-password", {
@@ -219,6 +223,7 @@ export default {
   },
   components: {
     Dialog,
+    DialogChoice,
   },
 };
 </script>

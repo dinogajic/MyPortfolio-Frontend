@@ -332,7 +332,6 @@ export default {
         schoolStartYear: null,
         schoolEndYear: null,
       },
-      educationCount: null,
       showEducation: false,
       country: "",
       file: null,
@@ -430,7 +429,6 @@ export default {
           String.fromCharCode(...new Uint8Array(response.data[0].img.data.data))
         )   */
       this.image = response.data.img.data;
-      this.educationCount--;
     },
     async saveEducationDetails() {
       this.education.push(this.educationDetails);
@@ -439,7 +437,6 @@ export default {
     async removeEducation(id) {
       const index = this.education.indexOf(id);
       this.education.splice(index, 1);
-      this.educationCount--;
     },
     async saveWorkExperienceDetails() {
       this.workExperience.push(this.workExperienceDetails);
