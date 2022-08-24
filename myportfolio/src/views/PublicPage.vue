@@ -181,3 +181,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+.work-experience {
+  border: 1px solid #089965;
+  padding: 10px;
+  margin-top: 10px;
+  word-wrap: break-word;
+}
+</style>
