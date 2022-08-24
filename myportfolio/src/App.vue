@@ -264,6 +264,11 @@ a:hover {
   align-items: center;
 }
 
+.navbar {
+  position: sticky;
+  top: 0px;
+}
+
 .navbar-toggler {
   background: none !important;
   color: none !important;

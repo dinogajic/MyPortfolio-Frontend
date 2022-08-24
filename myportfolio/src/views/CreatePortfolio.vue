@@ -12,9 +12,9 @@
               v-model="templateChoice"
               @change="resetValues()"
             >
-              <option class="dropdown-item" value="1">One</option>
-              <option class="dropdown-item" value="2">Two</option>
-              <option class="dropdown-item" value="3">Three</option>
+              <option class="dropdown-item" value="1">Design</option>
+              <option class="dropdown-item" value="2">Software</option>
+              <option class="dropdown-item" value="3">Photo Gallery</option>
             </select>
           </div>
         </div>
@@ -226,19 +226,30 @@
 </template>
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "CreatePortfolio",
   data() {
     return {
+      // DISABLED BUTTONS
       loadingOne: true,
       loadingTwo: true,
       loadingThree: true,
+
+      // NOTIFICATION MODAL
       alertResponseData: "",
       dialog: false,
+
+      // TEMPLATE CHOICE
       templateChoice: "1",
+
+      // IF ERROR
       error_input: "",
+
+      // TEMPLATES V-MODEL
       designPortfolio: {
         title: "",
         description: "",

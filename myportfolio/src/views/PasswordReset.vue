@@ -15,14 +15,19 @@
 
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "PasswordReset",
   data() {
     return {
+      // NOTIFICATION MODAL
       alertResponseData: "",
       dialog: false,
+
+      // CREDENTIAL
       email: null,
     };
   },

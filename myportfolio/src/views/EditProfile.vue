@@ -312,43 +312,62 @@
 
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "Profile",
   data() {
     return {
+      // WORK EXPERIENCE TEXTAREA RULE
       rules: [(v) => v.length >= 100 || "Min 100 characters"],
+
+      // USER DATA
       userID: [],
+
+      // USER DATA V-MODEL
       firstName: "",
       lastName: "",
       email: "",
       mobile_number: "",
       address: "",
       postcode: "",
-      education: [],
+      country: "",
       educationDetails: {
         schoolName: "",
         schoolStartYear: null,
         schoolEndYear: null,
       },
-      showEducation: false,
-      country: "",
-      file: null,
-      imageRef: "data:image/png;base64,",
-      image: null,
-      errorMessage: "",
-      loading: false,
-      dialog: false,
-      alertResponseData: "",
-      workExperience: [],
-      showWorkExperience: false,
       workExperienceDetails: {
         jobName: "",
         jobStartYear: null,
         jobEndYear: null,
         jobDescription: "",
       },
+      workExperience: [],
+      education: [],
+
+      // PROFILE PICTURE V-MODEL
+      file: null,
+
+      // IMAGE
+      imageRef: "data:image/png;base64,",
+      image: null,
+
+      // IF ERROR
+      errorMessage: "",
+
+      // DISABLED BUTTON
+      loading: false,
+
+      // NOTIFICATION MODAL
+      dialog: false,
+      alertResponseData: "",
+
+      // V-IF SHOW FORM
+      showWorkExperience: false,
+      showEducation: false,
     };
   },
   mounted() {

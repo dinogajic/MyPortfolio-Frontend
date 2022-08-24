@@ -1,6 +1,6 @@
 <template>
   <v-card
-    class="mx-auto"
+    class="mx-auto mobile"
     max-width="500"
     v-if="userPortfolio.template == 3"
     min-width="500px"
@@ -73,31 +73,42 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">Photo Gallery</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  label="Project title"
+                  label="Gallery Title"
                   v-model="userPortfolio.photoGalleryTitle"
                   required
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-textarea
-                  label="Project description"
+                  label="Gallery Description"
                   v-model="userPortfolio.photoGalleryDescription"
                   required
                 ></v-textarea>
               </v-col>
-              <v-col cols="12">
+              <v-card-actions>
+                <v-btn
+                  color="blue darken-1"
+                  dark
+                  @click="
+                    showUpdateImages = !showUpdateImages;
+                    files = null;
+                  "
+                  >CHANGE IMAGES</v-btn
+                >
+              </v-card-actions>
+              <v-col cols="12" v-if="showUpdateImages">
                 <v-file-input
                   v-model="files"
                   name="image"
                   accept="image/png"
-                  label="Choose images"
+                  label="Gallery Images"
                   multiple
                 />
               </v-col>
@@ -133,37 +144,54 @@ export default {
   name: "PhotoGalleryComponent",
   data() {
     return {
+      // CARD
       show: false,
-      images: this.userPortfolio.imagesArray,
       cycle: false,
+
+      // CARD IMAGES
+      images: this.userPortfolio.imagesArray,
       imageRef: "data:image/png;base64,",
+
+      // CARD UPDATE MODAL
       dialog: false,
+
+      // CARD UPDATE IMAGES
       files: null,
+      showUpdateImages: false,
     };
   },
   mounted() {},
   methods: {
     async editPortfolio(id) {
       const data = new FormData();
-      data.append("projectTitle", this.userPortfolio.projectTitle);
-      data.append("projectSubtitle", this.userPortfolio.projectSubtitle);
-      data.append("projectDescription", this.userPortfolio.projectDescription);
-      data.append("projectLinks", this.userPortfolio.projectLinks);
+      data.append("photoGalleryTitle", this.userPortfolio.photoGalleryTitle);
+      data.append(
+        "photoGalleryDescription",
+        this.userPortfolio.photoGalleryDescription
+      );
       data.append("templateChoice", this.userPortfolio.template);
-      this.files.forEach((file) => {
-        data.append("images", file);
-      });
+      if (this.files) {
+        this.files.forEach((file) => {
+          data.append("images", file);
+        });
+      }
       const response = await axios.patch(
         "https://my-portfolio-wa.herokuapp.com/portfolio/" + id,
         data
       );
+      if (this.files) {
+        const res = await axios.patch(
+          "https://my-portfolio-wa.herokuapp.com/portfolio-img/" + id,
+          data
+        );
+      }
 
       this.$router.go();
     },
     async deletePortfolio(id) {
-      await axios
-        .delete("https://my-portfolio-wa.herokuapp.com/portfolio/" + id)
-        .then((response) => {});
+      await axios.delete(
+        "https://my-portfolio-wa.herokuapp.com/portfolio/" + id
+      );
       this.$router.go();
     },
   },
@@ -182,5 +210,12 @@ a i {
 
 a i:hover {
   opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .mobile {
+    max-width: 350px !important;
+    min-width: 350px !important;
+  }
 }
 </style>

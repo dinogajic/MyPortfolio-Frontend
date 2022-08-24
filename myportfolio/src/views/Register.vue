@@ -83,16 +83,21 @@
 </template>
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 
 export default {
   data() {
     return {
+      // CREDENTIALS
       firstName: "",
       lastName: "",
       email: "",
       password: "",
       repeatPassword: "",
+
+      // NOTIFICATION MODAL
       alertResponseData: "",
       dialog: false,
     };

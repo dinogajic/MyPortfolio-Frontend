@@ -32,11 +32,14 @@
       />
     </div>
     <div style="margin-top: 50px"></div>
+    <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import DesignPortfolioComponent from "@/components/DesignPortfolioComponent.vue";
 import SoftwarePortfolioComponent from "@/components/SoftwarePortfolioComponent.vue";
 import PhotoGalleryComponent from "@/components/PhotoGalleryComponent.vue";
@@ -45,8 +48,13 @@ export default {
   name: "Portfolio",
   data() {
     return {
+      // USER PORTFOLIOS DATA
       userPortfolios: [],
+
+      // USER DATA
       userData: [],
+
+      // USER IMAGE
       userImage: "",
     };
   },
@@ -156,5 +164,11 @@ export default {
   color: #089965 !important;
   background-color: white;
   transition: 0.2s;
+}
+
+@media (max-width: 600px) {
+  .component-container {
+    width: 90%;
+  }
 }
 </style>

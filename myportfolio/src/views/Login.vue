@@ -52,8 +52,11 @@ import { Auth } from "@/services";
 export default {
   data() {
     return {
+      // CREDENTIALS
       email: "",
       password: "",
+
+      // IF ERROR
       errorMessage: "",
     };
   },

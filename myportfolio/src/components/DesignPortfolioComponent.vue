@@ -1,7 +1,7 @@
 <template>
   <v-card
-    class="mx-auto"
-    max-width="500"
+    class="mx-auto mobile"
+    max-width="500px"
     v-if="userPortfolio.template == 1"
     min-width="500px"
   >
@@ -75,7 +75,7 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="text-h5">User Profile</span>
+          <span class="text-h5">Design Portfolio</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -101,7 +101,18 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-card-actions>
+                <v-btn
+                  color="blue darken-1"
+                  dark
+                  @click="
+                    showUpdateImages = !showUpdateImages;
+                    files = null;
+                  "
+                  >CHANGE IMAGES</v-btn
+                >
+              </v-card-actions>
+              <v-col cols="12" v-if="showUpdateImages">
                 <v-file-input
                   v-model="files"
                   name="image"
@@ -142,37 +153,61 @@ export default {
   name: "DesignPortfolioComponent",
   data() {
     return {
+      // CARD
       show: false,
-      images: this.userPortfolio.imagesArray,
       cycle: false,
+
+      // CARD IMAGES
+      images: this.userPortfolio.imagesArray,
       imageRef: "data:image/png;base64,",
+
+      // CARD UPDATE MODAL
       dialog: false,
+
+      // CARD UPDATE IMAGES
       files: null,
+      showUpdateImages: false,
     };
   },
   mounted() {},
   methods: {
     async editPortfolio(id) {
       const data = new FormData();
-      data.append("projectTitle", this.userPortfolio.projectTitle);
-      data.append("projectSubtitle", this.userPortfolio.projectSubtitle);
-      data.append("projectDescription", this.userPortfolio.projectDescription);
-      data.append("projectLinks", this.userPortfolio.projectLinks);
+      data.append(
+        "designPortfolioTitle",
+        this.userPortfolio.designPortfolioTitle
+      );
+      data.append(
+        "designPortfolioDescription",
+        this.userPortfolio.designPortfolioDescription
+      );
+      data.append(
+        "designPortfolioLinks",
+        this.userPortfolio.designPortfolioLinks
+      );
       data.append("templateChoice", this.userPortfolio.template);
-      this.files.forEach((file) => {
-        data.append("images", file);
-      });
+      if (this.files) {
+        this.files.forEach((file) => {
+          data.append("images", file);
+        });
+      }
       const response = await axios.patch(
         "https://my-portfolio-wa.herokuapp.com/portfolio/" + id,
         data
       );
+      if (this.files) {
+        const res = await axios.patch(
+          "https://my-portfolio-wa.herokuapp.com/portfolio-img/" + id,
+          data
+        );
+      }
 
       this.$router.go();
     },
     async deletePortfolio(id) {
-      await axios
-        .delete("https://my-portfolio-wa.herokuapp.com/portfolio/" + id)
-        .then((response) => {});
+      await axios.delete(
+        "https://my-portfolio-wa.herokuapp.com/portfolio/" + id
+      );
       this.$router.go();
     },
   },
@@ -191,5 +226,12 @@ a i {
 
 a i:hover {
   opacity: 0.6;
+}
+
+@media (max-width: 600px) {
+  .mobile {
+    max-width: 350px !important;
+    min-width: 350px !important;
+  }
 }
 </style>

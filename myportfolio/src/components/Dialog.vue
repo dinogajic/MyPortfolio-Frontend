@@ -34,6 +34,7 @@ export default {
   name: "Dialog",
   data() {
     return {
+      // DIALOG MODAL PROP
       compDialog: this.dialog,
     };
   },
@@ -70,7 +71,7 @@ export default {
       ) {
         this.$router.go();
       } else if (this.alertResponseData.includes("Email sent to")) {
-        this.$router.go();
+        this.$router.go({ name: "Login" });
       } else if (
         this.alertResponseData.includes("Password changed successfully.")
       ) {

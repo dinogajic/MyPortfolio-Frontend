@@ -12,14 +12,19 @@
 </template>
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 
 export default {
   name: "ChangePassword",
   data() {
     return {
+      // NOTIFICATION MODAL
       alertResponseData: "",
       dialog: false,
+
+      // PASSWORD
       newPassword: null,
     };
   },
@@ -37,8 +42,13 @@ export default {
           }
         )
         .then((response) => {
-          if (response) {
+          if (response.data.msg) {
+            console.log(response);
             this.alertResponseData = response.data.msg;
+            this.dialog = true;
+          } else {
+            this.alertResponseData =
+              response.data.toUpperCase() + "!" + " This link is already used.";
             this.dialog = true;
           }
         });

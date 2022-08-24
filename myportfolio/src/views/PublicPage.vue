@@ -144,11 +144,12 @@ export default {
   name: "PublicPage",
   data() {
     return {
+      // USER DATA
       userData: [],
+
+      // USER PROFILE PICTURE
       imageRef: "data:image/png;base64,",
       image: "",
-      imageId: "",
-      imageReference: null,
     };
   },
   mounted() {

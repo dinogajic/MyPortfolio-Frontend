@@ -27,6 +27,7 @@ export default {
   name: "NotFound",
   data() {
     return {
+      // COUNTDOWN
       sec: 5,
     };
   },

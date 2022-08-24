@@ -22,6 +22,16 @@
             <span class="mt-2 font-weight-bold">
               {{ data.firstName }} {{ " " }} {{ data.lastName }}</span
             ><span class="text-black-50 mt-2">{{ data.email }}</span>
+            <span
+              ><button class="rl-cp w-100 mt-2" @click="getPublicLink()">
+                GENERATE PUBLIC LINK
+              </button></span
+            >
+            <span class="mt-2"
+              ><a :href="publicLink" class="publicLink">{{
+                publicLink
+              }}</a></span
+            >
           </div>
         </div>
         <div
@@ -124,20 +134,18 @@
         <div class="col-md-3"></div>
         <div class="col-md-5">
           <div class="mt-2 text-center" v-for="data in userData" :key="data.id">
-            <div class="p-3 py-5">
-              <router-link :to="'/edit-profile/' + data._id"
-                ><button class="rl-cp w-100" type="button">
-                  Edit Profile
-                </button></router-link
-              >
-              <button
-                class="rl-cp w-100 mt-2"
-                type="button"
-                @click="changePassword"
-              >
-                Change Password
-              </button>
-            </div>
+            <router-link :to="'/edit-profile/' + data._id"
+              ><button class="rl-cp w-100" type="button">
+                Edit Profile
+              </button></router-link
+            >
+            <button
+              class="rl-cp w-100 mt-2"
+              type="button"
+              @click="changePassword"
+            >
+              Change Password
+            </button>
           </div>
         </div>
       </div>
@@ -153,6 +161,8 @@
 
 <script>
 import axios from "axios";
+
+// COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 import DialogChoice from "@/components/DialogChoice.vue";
 
@@ -160,16 +170,28 @@ export default {
   name: "Profile",
   data() {
     return {
-      alertChoiceData: "",
+      // USER DATA
+      userData: [],
+
+      // NOTIFICATION MODAL
       alertResponseData: "",
-      choiceDialog: false,
       dialog: false,
+
+      // CHOICE DIALOG
+      alertChoiceData: "",
+      choiceDialog: false,
+
+      // PROFILE IMAGE
       imageRef: "data:image/png;base64,",
       image: "",
-      imageId: "",
-      userData: [],
+      // PROFILE IMAGE V-MODEL
       imageReference: null,
+
+      // USER EMAIl
       userEmail: "",
+
+      // USER PUBLIC LINK
+      publicLink: null,
     };
   },
   mounted() {
@@ -215,10 +237,13 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/profile_image"
       );
-      /* this.image = btoa(
-          String.fromCharCode(...new Uint8Array(response.data.img.data))
-        )   */
       this.image = response.data.img.data;
+    },
+    async getPublicLink() {
+      const response = await axios(
+        "https://my-portfolio-wa.herokuapp.com/generate-link"
+      );
+      this.publicLink = response.data;
     },
   },
   components: {
@@ -284,6 +309,17 @@ label {
   border: none;
   color: white;
   transition: 0.3s;
+}
+
+.publicLink {
+  font-size: 11px !important;
+  color: #089965 !important;
+  text-decoration: none !important;
+  transition: 0.2s;
+}
+
+.publicLink:hover {
+  opacity: 0.8 !important;
 }
 
 .profile-button:hover {

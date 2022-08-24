@@ -44,6 +44,7 @@ export default {
   name: "Dialog",
   data() {
     return {
+      // CHOICE DIALOG MODAL PROP
       compDialog: this.choiceDialog,
     };
   },
