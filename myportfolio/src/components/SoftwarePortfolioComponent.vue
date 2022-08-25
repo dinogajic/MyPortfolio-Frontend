@@ -65,7 +65,7 @@
     </v-expand-transition>
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-card-actions>
+        <v-card-actions v-if="path">
           <v-btn color="green" dark v-bind="attrs" v-on="on">
             UDPATE PORTFOLIO
           </v-btn>
@@ -168,10 +168,22 @@ export default {
       // CARD UPDATE IMAGES
       files: null,
       showUpdateImages: false,
+
+      // VIEW PATH
+      path: true,
     };
   },
-  mounted() {},
+  mounted() {
+    this.checkPath();
+  },
   methods: {
+    async checkPath() {
+      if (this.$route.path == "/portfolio") {
+        this.path = true;
+      } else {
+        this.path = false;
+      }
+    },
     async openLink() {
       window.open(this.userPortfolio.softwarePortfolioLinks);
     },

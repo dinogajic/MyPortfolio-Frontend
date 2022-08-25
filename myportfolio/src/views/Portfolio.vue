@@ -32,7 +32,6 @@
       />
     </div>
     <div style="margin-top: 50px"></div>
-    <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
   </v-app>
 </template>
 

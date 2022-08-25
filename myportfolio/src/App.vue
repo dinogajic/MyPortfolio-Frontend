@@ -25,7 +25,11 @@
         >
           <div class="navbar-nav">
             <div>
-              <router-link class="nav-link" to="/" v-if="auth.authenticated">
+              <router-link
+                class="nav-link"
+                to="/home"
+                v-if="auth.authenticated"
+              >
                 <div class="sidebar-div" style="display: flex !important">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -219,13 +223,27 @@ export default {
 };
 </script>
 <style>
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
-html {
+/* html {
   -ms-overflow-style: none;
   scrollbar-width: none;
+} */
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #e2e2e2;
+}
+::-webkit-scrollbar-thumb {
+  background: #555;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #25d294;
 }
 
 body {

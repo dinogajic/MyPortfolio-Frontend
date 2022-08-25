@@ -243,7 +243,8 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/generate-link"
       );
-      this.publicLink = response.data;
+      this.alertResponseData = response.data;
+      this.dialog = true;
     },
   },
   components: {

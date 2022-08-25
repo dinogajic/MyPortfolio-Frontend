@@ -133,12 +133,43 @@
         </div>
         <div class="col-md-4"></div>
       </div>
+      <div class="component-container">
+        <design-portfolio-component
+          style="margin-top: 30px"
+          v-for="userPortfolio in userPortfolios"
+          :key="userPortfolio.id"
+          :userPortfolio="userPortfolio"
+          :userData="userData"
+          :userImage="userImage"
+        />
+        <software-portfolio-component
+          style="margin-top: 30px"
+          v-for="userPortfolio in userPortfolios"
+          :key="userPortfolio.id"
+          :userPortfolio="userPortfolio"
+          :userData="userData"
+          :userImage="userImage"
+        />
+        <photo-gallery-component
+          style="margin-top: 30px"
+          v-for="userPortfolio in userPortfolios"
+          :key="userPortfolio.id"
+          :userPortfolio="userPortfolio"
+          :userData="userData"
+          :userImage="userImage"
+        />
+      </div>
     </div>
   </v-app>
 </template>
 
 <script>
 import axios from "axios";
+
+// COMPONENTS
+import DesignPortfolioComponent from "@/components/DesignPortfolioComponent.vue";
+import SoftwarePortfolioComponent from "@/components/SoftwarePortfolioComponent.vue";
+import PhotoGalleryComponent from "@/components/PhotoGalleryComponent.vue";
 
 export default {
   name: "PublicPage",
@@ -150,6 +181,10 @@ export default {
       // USER PROFILE PICTURE
       imageRef: "data:image/png;base64,",
       image: "",
+
+      // USER PORTFOLIOS
+      userPortfolios: [],
+      userImage: "",
     };
   },
   mounted() {
@@ -160,6 +195,7 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/public/" + this.$route.params.id
       );
+      console.log(response.data);
       if (response.data.msg) {
         console.log(response.data.msg);
       } else {
@@ -176,8 +212,48 @@ export default {
           workExperience: response.data[0].userData.workExperience,
         });
         this.image = response.data[1].img.data;
+        response.data[2].forEach((portfolio) => {
+          if (portfolio.template == 1) {
+            this.userPortfolios.push({
+              _id: portfolio._id,
+              designPortfolioTitle: portfolio.designPortfolioTitle,
+              designPortfolioDescription: portfolio.designPortfolioDescription,
+              designPortfolioLinks: portfolio.designPortfolioLinks,
+              userEmail: portfolio.userEmail,
+              template: portfolio.template,
+              imagesArray: portfolio.imagesArray,
+            });
+          }
+          if (portfolio.template == 2) {
+            this.userPortfolios.push({
+              _id: portfolio._id,
+              softwarePortfolioTitle: portfolio.softwarePortfolioTitle,
+              softwarePortfolioDescription:
+                portfolio.softwarePortfolioDescription,
+              softwarePortfolioLinks: portfolio.softwarePortfolioLinks,
+              userEmail: portfolio.userEmail,
+              template: portfolio.template,
+              imagesArray: portfolio.imagesArray,
+            });
+          }
+          if (portfolio.template == 3) {
+            this.userPortfolios.push({
+              _id: portfolio._id,
+              photoGalleryTitle: portfolio.photoGalleryTitle,
+              photoGalleryDescription: portfolio.photoGalleryDescription,
+              userEmail: portfolio.userEmail,
+              template: portfolio.template,
+              imagesArray: portfolio.imagesArray,
+            });
+          }
+        });
       }
     },
+  },
+  components: {
+    DesignPortfolioComponent,
+    SoftwarePortfolioComponent,
+    PhotoGalleryComponent,
   },
 };
 </script>
@@ -187,5 +263,20 @@ export default {
   padding: 10px;
   margin-top: 10px;
   word-wrap: break-word;
+}
+
+.component-container {
+  margin: auto;
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+@media (max-width: 600px) {
+  .component-container {
+    width: 100%;
+  }
 }
 </style>
