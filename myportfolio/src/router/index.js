@@ -8,6 +8,11 @@ Vue.use(VueRouter);
 
 const routes = [
   {
+    path: "/",
+    name: "Landing",
+    component: () => import("../views/LandingPage.vue"),
+  },
+  {
     path: "/home",
     name: "Home",
     component: () => import("../views/Home.vue"),
@@ -74,6 +79,7 @@ router.beforeEach((to, from, next) => {
   const id = to.params.id;
   const token = to.params.token;
   const publicPages = [
+    "/",
     "/login",
     "/register",
     `/public/${id}`,

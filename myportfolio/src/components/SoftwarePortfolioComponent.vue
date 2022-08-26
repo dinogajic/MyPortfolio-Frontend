@@ -67,7 +67,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-card-actions v-if="path">
           <v-btn color="green" dark v-bind="attrs" v-on="on">
-            UDPATE PORTFOLIO
+            UPDATE PORTFOLIO
           </v-btn>
           <v-btn color="red" dark @click="deletePortfolio(userPortfolio._id)">
             DELETE PORTFOLIO
@@ -140,6 +140,10 @@
           >
             Save
           </v-btn>
+          <Dialog
+            :alertResponseData="alertResponseData"
+            :dialog="dialogUpdate"
+          />
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -148,6 +152,8 @@
 
 <script>
 import axios from "axios";
+
+import Dialog from "@/components/Dialog.vue";
 
 export default {
   props: ["userPortfolio", "userData", "userImage"],
@@ -171,6 +177,10 @@ export default {
 
       // VIEW PATH
       path: true,
+
+      // NOTIFICATION MODAL
+      alertResponseData: "",
+      dialogUpdate: false,
     };
   },
   mounted() {
@@ -218,7 +228,8 @@ export default {
         );
       }
 
-      this.$router.go();
+      this.alertResponseData = response.data.msg;
+      this.dialogUpdate = true;
     },
     async deletePortfolio(id) {
       await axios.delete(
@@ -226,6 +237,9 @@ export default {
       );
       this.$router.go();
     },
+  },
+  components: {
+    Dialog,
   },
 };
 </script>

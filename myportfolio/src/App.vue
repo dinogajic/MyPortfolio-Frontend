@@ -283,7 +283,6 @@ a:hover {
 }
 
 .navbar {
-  position: sticky;
   top: 0px;
 }
 
@@ -322,6 +321,10 @@ a:hover {
 
   .show-right {
     display: none;
+  }
+
+  .navbar {
+    position: sticky;
   }
 
   svg {

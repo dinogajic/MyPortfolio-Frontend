@@ -167,7 +167,7 @@ export default {
 
 @media (max-width: 600px) {
   .component-container {
-    width: 90%;
+    width: 100%;
   }
 }
 </style>

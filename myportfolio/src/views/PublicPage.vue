@@ -30,9 +30,6 @@
           :key="data.id"
         >
           <div class="p-3 py-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Profile Settings</h4>
-            </div>
             <div class="row mt-2">
               <div class="col-md-6">
                 <label class="labels">Name</label>

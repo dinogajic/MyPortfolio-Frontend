@@ -76,6 +76,12 @@ export default {
         this.alertResponseData.includes("Password changed successfully.")
       ) {
         this.$router.push({ name: "Home" });
+      } else if (
+        this.alertResponseData.includes(
+          "Portfolio information has successfully updated."
+        )
+      ) {
+        this.$router.go();
       }
     },
   },

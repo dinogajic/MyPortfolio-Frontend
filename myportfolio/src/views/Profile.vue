@@ -40,9 +40,6 @@
           :key="data.id"
         >
           <div class="p-3 py-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Profile Settings</h4>
-            </div>
             <div class="row mt-2">
               <div class="col-md-6">
                 <label class="labels">Name</label>
@@ -156,6 +153,10 @@
       :resetPassword="resetPassword"
     />
     <Dialog :alertResponseData="alertResponseData" :dialog="dialog" />
+    <DialogClipboard
+      :alertResponseData="alertResponseDataClipboard"
+      :dialog="dialogClipboard"
+    />
   </v-app>
 </template>
 
@@ -165,6 +166,7 @@ import axios from "axios";
 // COMPONENTS
 import Dialog from "@/components/Dialog.vue";
 import DialogChoice from "@/components/DialogChoice.vue";
+import DialogClipboard from "@/components/DialogClipboard.vue";
 
 export default {
   name: "Profile",
@@ -180,6 +182,10 @@ export default {
       // CHOICE DIALOG
       alertChoiceData: "",
       choiceDialog: false,
+
+      // CLIPBOARD MODAL
+      alertResponseDataClipboard: "",
+      dialogClipboard: false,
 
       // PROFILE IMAGE
       imageRef: "data:image/png;base64,",
@@ -243,13 +249,14 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/generate-link"
       );
-      this.alertResponseData = response.data;
-      this.dialog = true;
+      this.alertResponseDataClipboard = response.data;
+      this.dialogClipboard = true;
     },
   },
   components: {
     Dialog,
     DialogChoice,
+    DialogClipboard,
   },
 };
 </script>
