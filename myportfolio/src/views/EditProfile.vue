@@ -114,19 +114,15 @@
                   value=""
                 />
               </div>
-              <div class="row mt-3">
-                <div class="col-md-12">
-                  <label class="labels">Country</label
-                  ><input
-                    required
-                    v-model="data.country"
-                    type="text"
-                    class="form-control"
-                    placeholder="Country..."
-                    value=""
-                  />
-                </div>
+              <div class="col-md-12">
+                <label class="labels">Country</label>
+                <select class="form-control col-md-12" v-model="data.country">
+                  <option v-for="(c, i) in countries" :key="i" :value="c">
+                    {{ c }}
+                  </option>
+                </select>
               </div>
+              <div class="row mt-3"></div>
               <div class="col-md-12">
                 <label class="labels">Education</label>
                 <div
@@ -331,6 +327,7 @@ export default {
       address: "",
       postcode: "",
       country: "",
+      countries: [],
       educationDetails: {
         schoolName: "",
         schoolStartYear: null,
@@ -370,8 +367,18 @@ export default {
   mounted() {
     this.getUserData();
     this.getImage();
+    this.getCountries();
   },
   methods: {
+    getCountries() {
+      axios.get("https://restcountries.com/v3.1/all").then((response) => {
+        response.data.forEach((country) => {
+          this.countries.push(country.name.common);
+          this.countries.sort();
+        });
+      });
+    },
+
     async getUserData() {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/user"

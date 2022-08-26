@@ -157,6 +157,16 @@
         />
       </div>
     </div>
+    <div class="footer">
+      <div class="footer-text">
+        <p>© MyPortfolio 2022. All Rights Reserved.</p>
+        <img
+          class="footer-img"
+          src="@/assets/MyPortfolioTextWhitepng.png"
+          alt=""
+        />
+      </div>
+    </div>
   </v-app>
 </template>
 
@@ -192,9 +202,8 @@ export default {
       const response = await axios(
         "https://my-portfolio-wa.herokuapp.com/public/" + this.$route.params.id
       );
-      console.log(response.data);
       if (response.data.msg) {
-        console.log(response.data.msg);
+        this.$router.push({ name: "NotFound" });
       } else {
         this.userData.push({
           _id: response.data[0]._id,
@@ -269,6 +278,20 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
+}
+
+.footer-img {
+  width: 200px;
+}
+
+.footer {
+  background-color: #555;
+  text-align: center;
+}
+
+.footer-text {
+  padding: 70px;
+  color: #fff;
 }
 
 @media (max-width: 600px) {

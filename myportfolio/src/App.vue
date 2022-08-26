@@ -223,15 +223,6 @@ export default {
 };
 </script>
 <style>
-/* ::-webkit-scrollbar {
-  display: none;
-} */
-
-/* html {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-} */
-
 ::-webkit-scrollbar {
   width: 5px;
 }

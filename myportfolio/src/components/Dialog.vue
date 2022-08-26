@@ -59,10 +59,6 @@ export default {
       } else if (this.alertResponseData.includes("Update error")) {
         this.$router.go();
       } else if (
-        this.alertResponseData.includes("Profile picture successfully updated.")
-      ) {
-        this.$router.go();
-      } else if (
         this.alertResponseData.includes("portfolio created successfully.")
       ) {
         this.$router.push({ name: "Portfolio" });

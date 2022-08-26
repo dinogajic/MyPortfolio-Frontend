@@ -85,6 +85,7 @@ router.beforeEach((to, from, next) => {
     `/public/${id}`,
     "/password-reset",
     `/change-password/${id}/${token}`,
+    "*",
   ];
   const loginNeeded = !publicPages.includes(to.path);
   const user = Auth.getUser();

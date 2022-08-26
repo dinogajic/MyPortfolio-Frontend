@@ -23,10 +23,15 @@
 </template>
 
 <script>
+import { Auth } from "@/services";
+
 export default {
   name: "NotFound",
   data() {
     return {
+      // AUTH
+      auth: Auth.state,
+
       // COUNTDOWN
       sec: 5,
     };
@@ -35,7 +40,11 @@ export default {
     this.timer();
     setTimeout(() => {
       if (this.sec == 0) {
-        this.$router.push({ name: "Home" });
+        if (this.auth.authenticated) {
+          this.$router.push({ name: "Home" });
+        } else {
+          this.$router.push({ name: "Landing" });
+        }
       }
     }, 5500);
   },
